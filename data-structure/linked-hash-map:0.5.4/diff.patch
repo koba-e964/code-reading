@@ -1,0 +1,9 @@
+96,97c96,97
+< impl<K, Q: ?Sized> Borrow<Qey<Q>> for KeyRef<K> where K: Borrow<Q> {
+<     fn borrow(&self) -> &Qey<Q> {
+---
+> impl<K, Q: ?Sized> Borrow<Q> for KeyRef<K> where K: Borrow<Q> {
+>     fn borrow(&self) -> &Q {
+1349a1350,1351
+> 
+> fn main(){}
