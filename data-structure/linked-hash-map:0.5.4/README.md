@@ -20,3 +20,14 @@ error[E0119]: conflicting implementations of trait `std::borrow::Borrow<KeyRef<_
              where T: ?Sized;
 ```
 (`run.sh` を実行すれば試せる)
+
+
+昔からこのデータ構造は難しいと思って身構えていたが、コードを読んでみたらそれほどでもなかった。反省。
+
+## 概要
+HashMap + エントリ同士をつなぐリンク。
+
+free: 使用済みの node を覚えておいて後で再利用する。K や V は uninitialized な状態である。特に、K や V を drop してはならない。新しく node として転用したい場合は `ptr::write` を使う。
+
+## 細かい点
+`detach`, `attach`, `with_map` は　`unsafe fn` であるべき。内部関数であっても dangling pointer を渡されたら UB を起こすので。
