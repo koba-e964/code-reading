@@ -1,0 +1,6 @@
+counter = 19766348
+diff = 233652
+
+real	0m1.463s
+user	0m2.724s
+sys	0m0.023s
