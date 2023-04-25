@@ -1,5 +1,5 @@
 ## 概要
-BLS signature や BN signature に必要な pairing 写像の実例である、optimal ate pairing について書く。
+BLS signature や BN signature に必要な pairing 写像の実例である、optimal ate pairing について書く。[[Ver2008]] の流れに乗って説明する。
 
 ## 準備
 pairing 写像: 写像 $e: G_1 \times G_2 \to G_T$ であり以下を満たすもの:
@@ -99,6 +99,13 @@ Twisting とは何?
 ### 5
 [[Ver2008]] の 2.2: $E$ は $E[\overline {\mathbb{F}_q}]$ でよいのか? これなら $E[r] \simeq (\mathbb{Z}/r\mathbb{Z})^2$ であるという定理があったはず。
 
+### 6
+[[Ver2008]] の 2.3: $l_{P,Q}$ と $v_P$ は具体的には何? [[Mill2004]] によれば、以下のように定義する。
+- 関数が **normalized** であるとは、$u_O = -y/x$ として $u_O$ でローラン展開したときの首項の係数が 1 であることである。
+- $l_{P,Q}$ も $v_P$ も、しかるべき関数であって normalized であるものと定義する。($l_{P,Q}$ は $l_{P,Q} = 0$ が $P,Q$ を通る直線であるような多項式、$v_P$ は $v_P = 0$ が $P, -P$ を通る直線であるような多項式である。)
+  - $v_P$ = $x - x_P$ とすれば $(x-x_P)(-y/x)^{-2} \to 1$ であるため normalized である。
+  - $P,Q$ を通る直線が $l_{P, Q} = ax + by + c = 0$ として、$l_{P, Q}$ が normalized であることは $b \neq 0$ のときは $b = -1$、$b = 0$ のときは $a = 1$ と同値のはず。
+
 ## References
 [[Ver2008]]: Frederik Vercauteren. Optimal pairings. Cryptology ePrint Archive, Report 2008/096, 2008.
 
@@ -108,6 +115,10 @@ Twisting とは何?
 
 [[FR1994]]: G. Frey and H-G. Rück. A remark concerning m-divisibility and the discrete logarithm in the divisor class group of curves. Math. Comp., 62(206):865–874, 1994.
 
+[[Mill2004]]: V. S. Miller. The Weil pairing, and its efficient calculation. J. Cryptology,
+17(4):235–261, 2004.
+
 [Ver2008]: https://eprint.iacr.org/2008/096.pdf
 [Naeh2009]: https://cryptosith.org/michael/data/thesis/2009-05-13-diss.pdf
 [FR1994]: https://www.ams.org/journals/mcom/1994-62-206/S0025-5718-1994-1218343-6/S0025-5718-1994-1218343-6.pdf
+[Mill2004]: https://www.researchgate.net/publication/220478991_The_Weil_Pairing_and_Its_Efficient_Calculation
