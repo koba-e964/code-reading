@@ -108,6 +108,7 @@ $G _ 1 = E[r] \cap \mathrm{ker}(\phi_q - 1), G _ 2 = E[r] \cap \mathrm{ker}(\phi
 
 ### 3
 [[Ver2008]] の 4: $v_Q$ が final exponentiation で消えるのはなぜ?
+https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf の 7.1 で説明されている。 $(x_P - x_Q)^{(q^k-1)/r} = 1$ を示せれば良いが、 $x_P \in \mathbb{F} _ q$ は $\phi_q(x) = x$ から明らか。 $x_Q \in \mathbb{F} _ q$ については理由が書かれているが理解できていない。 $q-1|(q^k-1)/r$ は埋め込み次数が 1 でないことからわかる。
 
 ### 4
 Twisting とは何?
