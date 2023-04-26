@@ -49,13 +49,25 @@ pairing 写像: 写像 $e: G _ 1 \times G _ 2 \to G _ T$ であり以下を満�
 こうすると $t(P, Q) := f_{r, P}(Q)^{(q^k-1)/r}$ がペアリング写像である。
 
 Barreto-Naehrig curve では以下のようにパラメータが決められている。
-- $x \in \mathbb{Z} _ {\ge 0}$
+- $x \in \mathbb{Z}$
 - $k = 12$
 - $q = p = 36x^4 + 36x^3 + 24x^2 + 6x + 1$
 - $r = p - 6x^2 = 36x^4 + 36x^3 + 18x^2 + 6x + 1$
 
 その一種、BN254 では以下のようにパラメータが決められている。
+- $E$ は $y^2 = x^3 + 3$
 - `x = 4965661367192848881 = 0x44e992b44a6909f1 ~= 2^{62.1}`
+
+BLS curve では以下である。(https://hackmd.io/@benjaminion/bls12-381)
+- $x \in 1 + 3\mathbb{Z}$
+- $k = 12$
+- $q = p = (x-1)^2(x^4 - x^2 + 1)/3 + x$
+- $r = x^4 - x^2 + 1$
+
+その一種、BLS12-381 では以下である。
+- $E$ は $y^2 = x^3 + 4$
+- `x = -0xd201000000010000`
+
 ## Optimal ate pairing
 [[Ver2008]] の Sections 2.2, 4 に沿うことにする。
 
@@ -76,6 +88,9 @@ $$f_{mr, Q}(P)^{(p^k-1)/r} = \left(f_{6x+2,Q}(P)l_{-p^2Q, p^3Q}(P)l_{-p^2Q + p^3
 
 繰り返しになるがここで $p^iQ = \phi_p^i(Q)$ であることに注意。
 また $-p^2Q + p^3Q + pQ + (6x+2)Q = O$ であることにも注意すると $l_{-p^2Q + p^3Q + pQ, (6x+2)Q}(P) = v_{(6x+2)Q}(P)$ であるため、やはり $(q^k-1)/r$ 乗すると消える。このようにすると $f$ 1 個、 $l$ 2 個の積になる。https://hackmd.io/@jpw/bn254 では別の組み合わせ方を紹介しているが、いずれにせよ $f$ 1 個、 $l$ 2 個の積である。
+
+BLS curve については、https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf を読む限り $f _ {q,Q}$ と $f _ {x,Q}$ の差が $(\mathbb{F} _ {q^k}^{\ast})^r$ なので、単に $f _ {x,Q}(P)^{(q^k-1)/r}$ を計算すればよくこれ以上最適化する必要はない。 $q \equiv x \pmod r$ に注意。
+(この $f _ {q - mr,Q}^{(q^k-1)/r}$ のようなものを ate pairing と呼ぶようである。ate pairing も pairing である。)
 
 ## 疑問点
 ### 1
