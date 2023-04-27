@@ -11,8 +11,8 @@ import (
 	"strings"
 )
 
-var httpRegex = regexp.MustCompile("http://[-._/[:alnum:]]+")
-var httpsRegex = regexp.MustCompile("https://[-._/[:alnum:]]+")
+var httpRegex = regexp.MustCompile("http://[-._%/[:alnum:]]+")
+var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]]+")
 
 func checkURLLiveness(url string) error {
 	resp, err := http.Head(url)
@@ -37,7 +37,7 @@ func checkFile(path string) (err error) {
 		fmt.Fprintf(os.Stderr, "%s: HTTP link: url = %s\n", path, url)
 	}
 	if httpErrors > 0 {
-		err = fmt.Errorf("Detected HTTP links: path = %s, prev error = %w", path, err)
+		err = fmt.Errorf("detected HTTP links: path = %s, prev error = %w", path, err)
 	}
 
 	all = httpsRegex.FindAll(content, -1)

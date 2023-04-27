@@ -138,4 +138,4 @@ Twisting とは何?
 [Ver2008]: https://eprint.iacr.org/2008/096.pdf
 [Naeh2009]: https://cryptosith.org/michael/data/thesis/2009-05-13-diss.pdf
 [FR1994]: https://www.ams.org/journals/mcom/1994-62-206/S0025-5718-1994-1218343-6/S0025-5718-1994-1218343-6.pdf
-[Mill2004]: https://www.researchgate.net/publication/220478991_The_Weil_Pairing_and_Its_Efficient_Calculation
+[Mill2004]: https://www.semanticscholar.org/paper/The-Weil-Pairing%2C-and-Its-Efficient-Calculation-Miller/ec4c62fe581cd1ba4e6ba2ed165a148b745f1a4c
