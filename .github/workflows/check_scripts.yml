@@ -1,0 +1,25 @@
+name: Testing of scripts
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint -r algorithm/smart-attack/requirements.txt
+
+      - name: Check scripts
+        run: |
+          pylint algorithm/smart-attack/smart_attack.py --fail-under=9
+          python algorithm/smart-attack/smart_attack.py test

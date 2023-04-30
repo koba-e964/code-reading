@@ -66,6 +66,7 @@ func main() {
 		".java",
 		".mod",
 		".md",
+		".py",
 		".rs",
 		".sh",
 		".txt",
