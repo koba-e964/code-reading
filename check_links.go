@@ -33,18 +33,17 @@ func checkFile(path string) (err error) {
 	}
 
 	all := httpRegex.FindAll(content, -1)
-	var httpErrors uint64 = 0
+	var livenessErrors uint64 = 0
 	for _, v := range all {
 		url := string(v)
-		httpErrors++
 		fmt.Fprintf(os.Stderr, "%s: HTTP link: url = %s\n", path, url)
-	}
-	if httpErrors > 0 {
-		err = fmt.Errorf("detected HTTP links: path = %s, prev error = %w", path, err)
+		if thisError := checkURLLiveness(url); thisError != nil {
+			livenessErrors++
+			fmt.Fprintf(os.Stderr, "%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
+		}
 	}
 
 	all = httpsRegex.FindAll(content, -1)
-	var livenessErrors uint64 = 0
 	for _, v := range all {
 		url := string(v)
 		if thisError := checkURLLiveness(url); thisError != nil {

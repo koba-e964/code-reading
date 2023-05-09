@@ -85,4 +85,4 @@ zw-平面で考える時、位数が $r \neq p$ のときも $E(\mathbb{F} _ p)$
 
 [[Sma1999]]: Smart, Nigel P. "The discrete logarithm problem on elliptic curves of trace one." Journal of cryptology 12 (1999): 193-196.
 
-[Sma1999]: https://www.hpl.hp.com/techreports/97/HPL-97-128.pdf
+[Sma1999]: https://iacr.org/cryptodb/data/paper.php?pubkey=14320

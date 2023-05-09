@@ -161,7 +161,7 @@ def test():
         c = ec.add(c, p)
         assert ec.is_on(c)
     assert c == (0, 0)
-    # An example found in https://www.hpl.hp.com/techreports/97/HPL-97-128.pdf
+    # An example found in https://iacr.org/cryptodb/data/paper.php?pubkey=14320
     mo = 43
     ec = ECZW(mo, 0, -4, 0, -128, -432)
     order = 0
