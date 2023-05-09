@@ -16,11 +16,14 @@ var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]]+")
 
 func checkURLLiveness(url string) error {
 	resp, err := http.Head(url)
+	if err != nil {
+		return err
+	}
 	if resp.StatusCode != 200 {
 		fmt.Fprintf(os.Stderr, "code = %d, url = %s\n", resp.StatusCode, url)
 		return errors.New("invalid status code")
 	}
-	return err
+	return nil
 }
 
 func checkFile(path string) (err error) {
