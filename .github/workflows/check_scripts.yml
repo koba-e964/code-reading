@@ -23,3 +23,4 @@ jobs:
         run: |
           pylint algorithm/smart-attack/smart_attack.py --fail-under=9
           python algorithm/smart-attack/smart_attack.py test
+          pylint algorithm/ecpp/binary_quad.py --fail-under=9
