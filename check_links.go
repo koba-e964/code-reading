@@ -19,7 +19,7 @@ func checkURLLiveness(url string) error {
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode/100 != 2 {
 		fmt.Fprintf(os.Stderr, "code = %d, url = %s\n", resp.StatusCode, url)
 		return errors.New("invalid status code")
 	}
