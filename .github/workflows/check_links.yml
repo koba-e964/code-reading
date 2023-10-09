@@ -1,6 +1,8 @@
 name: Link checker
 
 on:
+  schedule:
+    - cron: '10 12 * * *'
   push:
     branches: [ master ]
   pull_request:
@@ -13,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Check hyperlinks
         run: go run check_links.go
