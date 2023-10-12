@@ -34,8 +34,8 @@ TODO
 
 #### データ表現形式
 二進数。
-Uterm: Unsigned ... 0
-UInt<U: Unsigned, B: Bit> ... 2 * U + B (B = B0 or B1)
+- `Uterm: Unsigned`: 0
+- `UInt<U: Unsigned, B: Bit>`: 2 * U + B (B = B0 or B1)
 
 符号なし整数を表す型は `Unsigned` を実装する。
 
