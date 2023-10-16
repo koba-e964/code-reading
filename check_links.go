@@ -9,19 +9,32 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 )
 
 var httpRegex = regexp.MustCompile("http://[-._%/[:alnum:]]+")
 var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]]+")
 
-func checkURLLiveness(url string) error {
-	resp, err := http.Head(url)
-	if err != nil {
-		return err
-	}
-	if resp.StatusCode/100 != 2 {
+// config
+var retryCount = 3
+
+func checkURLLiveness(url string, retryCount int) error {
+	for i := 0; i < retryCount; i++ {
+		resp, err := http.Head(url)
+		if err != nil {
+			return err
+		}
+		if resp.StatusCode/100 == 2 {
+			// ok
+			return nil
+		}
 		fmt.Fprintf(os.Stderr, "code = %d, url = %s\n", resp.StatusCode, url)
-		return errors.New("invalid status code")
+		if i == retryCount-1 {
+			return errors.New("invalid status code")
+		} else {
+			// exponential backoff
+			time.Sleep((1 << i) * time.Second)
+		}
 	}
 	return nil
 }
@@ -37,7 +50,7 @@ func checkFile(path string) (err error) {
 	for _, v := range all {
 		url := string(v)
 		fmt.Fprintf(os.Stderr, "%s: HTTP link: url = %s\n", path, url)
-		if thisError := checkURLLiveness(url); thisError != nil {
+		if thisError := checkURLLiveness(url, retryCount); thisError != nil {
 			livenessErrors++
 			fmt.Fprintf(os.Stderr, "%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
 		}
@@ -46,7 +59,7 @@ func checkFile(path string) (err error) {
 	all = httpsRegex.FindAll(content, -1)
 	for _, v := range all {
 		url := string(v)
-		if thisError := checkURLLiveness(url); thisError != nil {
+		if thisError := checkURLLiveness(url, retryCount); thisError != nil {
 			livenessErrors++
 			fmt.Fprintf(os.Stderr, "%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
 		}
