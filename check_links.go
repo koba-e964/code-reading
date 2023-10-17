@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -16,7 +17,7 @@ var httpRegex = regexp.MustCompile("http://[-._%/[:alnum:]]+")
 var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]]+")
 
 // config
-var retryCount = 3
+var retryCount = 5
 
 func checkURLLiveness(url string, retryCount int) error {
 	for i := 0; i < retryCount; i++ {
@@ -28,7 +29,7 @@ func checkURLLiveness(url string, retryCount int) error {
 			// ok
 			return nil
 		}
-		fmt.Fprintf(os.Stderr, "code = %d, url = %s\n", resp.StatusCode, url)
+		log.Printf("code = %d, url = %s\n", resp.StatusCode, url)
 		if i == retryCount-1 {
 			return errors.New("invalid status code")
 		} else {
@@ -49,10 +50,10 @@ func checkFile(path string) (err error) {
 	var livenessErrors uint64 = 0
 	for _, v := range all {
 		url := string(v)
-		fmt.Fprintf(os.Stderr, "%s: HTTP link: url = %s\n", path, url)
+		log.Printf("%s: HTTP link: url = %s\n", path, url)
 		if thisError := checkURLLiveness(url, retryCount); thisError != nil {
 			livenessErrors++
-			fmt.Fprintf(os.Stderr, "%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
+			log.Printf("%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
 		}
 	}
 
@@ -61,7 +62,7 @@ func checkFile(path string) (err error) {
 		url := string(v)
 		if thisError := checkURLLiveness(url, retryCount); thisError != nil {
 			livenessErrors++
-			fmt.Fprintf(os.Stderr, "%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
+			log.Printf("%s: not alive: url = %s, thiserror = %v\n", path, url, thisError)
 		}
 	}
 	if livenessErrors > 0 {
@@ -90,7 +91,7 @@ func main() {
 	cmd := exec.Command("git", "ls-files")
 	output, err := cmd.Output()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "git ls-files failed")
+		log.Printf("git ls-files failed")
 		os.Exit(2)
 	}
 	paths := strings.Split(strings.ReplaceAll(string(output), "\r\n", "\n"), "\n")
@@ -99,7 +100,7 @@ func main() {
 		info, err := os.Stat(path)
 		if err != nil {
 			numErrors++
-			fmt.Fprintf(os.Stderr, "path = %s, %v\n", path, err)
+			log.Printf("path = %s, %v\n", path, err)
 			continue
 		}
 		if info.IsDir() {
@@ -116,7 +117,7 @@ func main() {
 		if ok {
 			if err := checkFile(path); err != nil {
 				numErrors++
-				fmt.Fprintf(os.Stderr, "%v\n", err)
+				log.Printf("%v\n", err)
 			}
 		}
 		continue
