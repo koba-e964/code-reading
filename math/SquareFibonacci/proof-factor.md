@@ -1,6 +1,6 @@
 # 証明
 ### (F-even)
-- $F_{2m} = F_mL_m$
+- (F-even): $F_{2m} = F_mL_m$
 
 式変形をすれば明らか。
 $$\begin{align*}
@@ -9,10 +9,9 @@ F_{2m} &= (\phi^{2m}-\overline\phi^{2m})/\sqrt{5}\\\\
 &= L_mF_m
 \end{align*}$$
 
-### (gcd-3)
-- $\mathrm{gcd}(F_{3m}, L_{3m}) = 2$
-### (gcd-not-3)
-- $3 \not| n$ のとき、 $\mathrm{gcd}(F_{n}, L_{n}) = 1$
+### (gcd-3), (gcd-not-3)
+- (gcd-3): $\mathrm{gcd}(F_{3m}, L_{3m}) = 2$
+- (gcd-not-3): $3 \not| n$ のとき、 $\mathrm{gcd}(F_{n}, L_{n}) = 1$
 
 似たような命題なので同時に証明する。
 
