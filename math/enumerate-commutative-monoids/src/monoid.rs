@@ -36,12 +36,19 @@ impl From<Monoid> for MonoidRep {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct Monoid {
     table: Vec<Vec<usize>>,
 }
 
 impl Monoid {
+    pub fn new(table: Vec<Vec<usize>>) -> Option<Self> {
+        let result = Self { table };
+        if !result.is_valid() {
+            return None;
+        }
+        Some(result.normalize())
+    }
     pub fn len(&self) -> usize {
         self.table.len()
     }
@@ -83,7 +90,7 @@ impl Monoid {
         }
         let n = self.len();
         let mut perm: Vec<_> = (0..n).collect();
-        let mut min_table = self.table.clone();
+        let mut max_table = (vec![], self.table.clone());
         let mut idem = 0;
         for i in 0..n {
             if self.table[i][i] == i {
@@ -97,28 +104,34 @@ impl Monoid {
             let mut table = vec![vec![0; n]; n];
             for i in 0..n {
                 for j in 0..n {
-                    table[perm[i]][perm[j]] = self.table[i][j];
+                    table[perm[i]][perm[j]] = perm[self.table[i][j]];
+                }
+            }
+            let mut tie_break = vec![0; n * n];
+            for i in 0..n {
+                for j in 0..n {
+                    tie_break[i * n + j] = table[n - 1 - i][n - 1 - j];
                 }
             }
             for i in 0..idem {
-                if self.table[i][i] != i {
+                if table[i][i] != i {
                     ok = false;
                 }
             }
             if ok {
-                min_table = std::cmp::min(min_table.clone(), table);
+                max_table = std::cmp::max(max_table.clone(), (tie_break, table));
             }
             if next_permutation(&mut perm[1..]).is_none() {
                 break;
             }
         }
-        Self { table: min_table }
+        Self { table: max_table.1 }
     }
     /// Is `self` normalized?
     ///
     /// - The identity element (`e`) must be the 0th element.
     /// - All idempotent elements must come first.
-    /// - `a.table` should be the least possible.
+    /// - `rev(1d(a.table))` should be the greatest possible.
     pub fn is_normalized(&self) -> bool {
         let cp = self.normalize();
         cp == *self
