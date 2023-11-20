@@ -5,18 +5,18 @@ use std::fs;
 
 const OUTPUT_FILE: &str = "commutative-monoids.json";
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 struct ComMonsRep {
     orderwise: Vec<OrderwiseRep>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 struct OrderwiseRep {
     order: u16,
     idemwise: Vec<IdemwiseRep>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 struct IdemwiseRep {
     idem: u16,
     monoids: Vec<MonoidRep>,
@@ -56,18 +56,13 @@ fn dfs2(n: usize, x: usize, y: usize, table: &mut [Vec<usize>], set: &mut HashSe
 fn main() {
     let contents = fs::read_to_string(OUTPUT_FILE).expect("Should have been able to read the file");
 
-    let rep: ComMonsRep = serde_json::from_str(&contents).unwrap();
-    eprintln!("rep = {:?}", rep);
-    for v in rep.orderwise {
-        for v in v.idemwise {
-            for v in v.monoids {
-                let v: Monoid = v.into();
-                eprintln!("{:?} {}", v, v.is_normalized());
-            }
-        }
-    }
+    let mut rep: ComMonsRep = serde_json::from_str(&contents).unwrap();
 
-    for n in 3..=4 {
+    for n in 1..=5 {
+        if rep.orderwise.iter().any(|rep| rep.order == n as u16) {
+            continue;
+        }
+        let mut idemwise = Vec::new();
         for idem in 1..n + 1 {
             let mut set = HashSet::new();
             let mut table = vec![vec![0; n]; n];
@@ -79,9 +74,20 @@ fn main() {
                 table[0][i] = i;
             }
             dfs1(n, idem, idem, &mut table, &mut set);
-            for m in set {
+            for m in &set {
                 eprintln!("{} {} => {:?} {}", n, idem, m, m.is_normalized());
             }
+            let monoids: Vec<MonoidRep> = set.into_iter().map(Into::into).collect();
+            idemwise.push(IdemwiseRep {
+                idem: idem as u16,
+                monoids,
+            });
         }
+        rep.orderwise.push(OrderwiseRep {
+            order: n as u16,
+            idemwise,
+        });
     }
+    let content = serde_json::to_string_pretty(&rep).unwrap();
+    fs::write(OUTPUT_FILE, content.as_bytes()).unwrap();
 }

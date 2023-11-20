@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::next_permutation::next_permutation;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MonoidRep {
     pub table: Vec<String>,
 }
