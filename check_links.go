@@ -13,8 +13,8 @@ import (
 	"time"
 )
 
-var httpRegex = regexp.MustCompile("http://[-._%/[:alnum:]]+")
-var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]]+")
+var httpRegex = regexp.MustCompile("http://[-._%/[:alnum:]?:=+]+")
+var httpsRegex = regexp.MustCompile("https://[-._%/[:alnum:]?:=+]+")
 
 // config
 var retryCount = 5
