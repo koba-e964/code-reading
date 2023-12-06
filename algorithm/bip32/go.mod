@@ -1,6 +1,6 @@
 module github.com/koba-e964/code-reading/algorithm/bip32
 
-go 1.21.2
+go 1.21
 
 require github.com/tyler-smith/go-bip32 v1.0.0
 
