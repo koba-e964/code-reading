@@ -41,4 +41,4 @@ RSA の鍵生成 (素数 2 個の生成) アルゴリズムの紹介。
 
 [[FIPS186-4]]: National Institute of Standards and Technology (2013) Security Requirements for Cryptographic Modules. (Department of Commerce, Washington, D.C.), Federal Information Processing Standards Publications (FIPS PUBS) 186-4.
 
-[FIPS186-4]: https://www.omgwiki.org/dido/doku.php?id=dido:public:ra:xapend:xapend.b_stds:tech:nist:dss
+[FIPS186-4]: https://csrc.nist.gov/pubs/fips/186-4/final
