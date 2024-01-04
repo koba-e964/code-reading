@@ -21,8 +21,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint -r algorithm/smart-attack/requirements.txt
 
-      - name: Check scripts
+      - name: Check Python scripts
         run: |
           pylint algorithm/smart-attack/smart_attack.py --fail-under=9
           python algorithm/smart-attack/smart_attack.py test
           pylint algorithm/ecpp/binary_quad.py --fail-under=9
+
+      - name: Check Go files
+        run: |
+          for mod in `go list -f '{{.Dir}}' -m`; do
+            cd ${mod}
+            gofmt -l .
+            test -z `gofmt -l .`
+            go vet
+            go build -v ./...
+            go test -v
+          done

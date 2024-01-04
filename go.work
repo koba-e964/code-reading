@@ -2,3 +2,4 @@ go 1.21
 
 use .
 use ./algorithm/bip32
+use ./algorithm/deflate
