@@ -28,7 +28,7 @@ func main() {
 	b.Bits("0000000")  // Lit 0x100 = end
 
 	bs := b.Emit()
-	// [99 100 98 102 1 98 48 98 3 147 204 76 204 140 76 204]
+	// [99 100 98 102 1 98 48 98 3 147 204 76 204 140 76 204 0]
 	// Test case from https://github.com/Frommi/miniz_oxide/blob/0.7.0/miniz_oxide/src/deflate/core.rs#L2456
 	fmt.Println(bs)
 }

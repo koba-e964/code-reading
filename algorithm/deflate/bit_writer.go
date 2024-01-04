@@ -50,7 +50,7 @@ func (b *BitWriter) Int(i uint64, length int) {
 	}
 }
 
-// SkipToByteBoundary skips to the next byte boundary, filling with zeros.
+// SkipToByteBoundary skips to the next byte boundary, filling the current byte with zeros.
 func (b *BitWriter) SkipToByteBoundary() {
 	if b.numBitsWritten > 0 {
 		b.bytes = append(b.bytes, b.currentByte)
