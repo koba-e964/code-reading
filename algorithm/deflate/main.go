@@ -1,34 +1,46 @@
 package main
 
-import "fmt"
+import (
+	"encoding/binary"
+	"fmt"
+	"time"
+)
+
+func emitRow(startpos uint64, bytes []byte, explanation string, a ...any) {
+	BytesWidth := 4
+	fmt.Printf("%04x: ", startpos)
+	for index, b := range bytes {
+		fmt.Printf("%02x ", b)
+		if index%BytesWidth == BytesWidth-1 && index != len(bytes)-1 {
+			fmt.Println()
+			fmt.Print("      ")
+		}
+	}
+	for i := 0; i < (BytesWidth-len(bytes)%BytesWidth)%BytesWidth; i++ {
+		fmt.Print("   ")
+	}
+	formatted := fmt.Sprintf(explanation, a...)
+	fmt.Printf("%-20s", formatted)
+	fmt.Println()
+}
 
 func main() {
-	b := new(BitWriter)
-
-	b.Bits("1")        // BFINAL=1
-	b.Bits("10")       // BTYPE=01
-	b.Bits("00110001") // Lit 0x01 = Direct 0x01
-	b.Bits("00110010") // Lit 0x02 = Direct 0x02
-	b.Bits("00110011") // Lit 0x03 = Direct 0x03
-	b.Bits("00110100") // Lit 0x04 = Direct 0x04
-	b.Bits("0000001")  // Lit 0x101 = <length=3>
-	b.Bits("00011")    // Dist 0x03 = Distance 0x04
-	b.Bits("0000011")  // Lit 0x103 = <length=5>
-	b.Bits("00010")    // Dist 0x02 = Distance 0x03
-	b.Bits("00110110") // Lit 0x06 = Direct 0x06
-	b.Bits("0000011")  // Lit 0x103 = <length=5>
-	b.Bits("00100")    // Dist 0x04 = Distance [0x05, 0x07), Extra = 1
-	b.Bits("1")        // DExtra: Distance = 0x06
-	b.Bits("00110011") // Lit 0x03 = Direct 0x03
-	b.Bits("00110010") // Lit 0x02 = Direct 0x02
-	b.Bits("00110011") // Lit 0x03 = Direct 0x03
-	b.Bits("00110001") // Lit 0x01 = Direct 0x01
-	b.Bits("00110010") // Lit 0x02 = Direct 0x02
-	b.Bits("00110011") // Lit 0x03 = Direct 0x03
-	b.Bits("0000000")  // Lit 0x100 = end
-
-	bs := b.Emit()
-	// [99 100 98 102 1 98 48 98 3 147 204 76 204 140 76 204 0]
-	// Test case from https://github.com/Frommi/miniz_oxide/blob/0.7.0/miniz_oxide/src/deflate/core.rs#L2456
-	fmt.Println(bs)
+	stream := []byte{
+		0x1f, 0x8b, 0x08, 0x00, 0xfc, 0x59, 0x96, 0x65, 0x02, 0x03, 0x33, 0x34, 0x32, 0x36, 0xc4, 0x40,
+		0x5c, 0x00, 0x5e, 0x96, 0xa9, 0x24, 0x16, 0x00, 0x00, 0x00,
+	}
+	entry, err := ParseGzip(stream)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", entry)
+	emitRow(0, entry.Header.ID[:], "ID (0x1f 0x8b)")
+	emitRow(2, []byte{entry.Header.CompressionMethod}, "CM")
+	emitRow(3, []byte{entry.Header.Flags}, "FLG")
+	emitRow(4, stream[4:8], "MTIME %s", time.Unix(int64(entry.Header.Mtime), 0).UTC().Format(time.RFC3339))
+	emitRow(8, []byte{entry.Header.XFL}, "XFL")
+	emitRow(9, []byte{entry.Header.OS}, "OS")
+	emitRow(entry.DataPos, entry.Data, "Data")
+	emitRow(entry.FooterPos, binary.LittleEndian.AppendUint32(nil, entry.Footer.CRC32), "CRC32 0x%08x", entry.Footer.CRC32)
+	emitRow(entry.FooterPos+4, binary.LittleEndian.AppendUint32(nil, entry.Footer.Isize), "isize %d", entry.Footer.Isize)
 }
