@@ -31,12 +31,26 @@ deflate フォーマットは、ヘッダーと圧縮データの2つの部分�
 - ヘッダー: 圧縮情報
 - 圧縮データ: ブロックの繰り返し。([[RFC1951]] の 3.2. Compressed block format)
 
-## 例
+# 例
 フォーマットの例を示す。
 
 infgen というツールを使用した:
-<https://github.com/madler/infgen/tree/master> (version: [3.2](https://github.com/madler/infgen/commit/2d2300507d24b398dfc7482f3429cc0061726c8b))
+<https://github.com/madler/infgen> (version: [3.2](https://github.com/madler/infgen/commit/2d2300507d24b398dfc7482f3429cc0061726c8b))
 
+コンパイル方法は以下:
+```
+cc -I/opt/homebrew/opt/zlib/include -L/opt/homebrew/opt/zlib/lib infgen.c -o infgen -lz
+```
+
+依存関係は以下:
+```
+$ otool -L ./infgen
+./infgen:
+	/opt/homebrew/opt/zlib/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.3.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1336.61.1)
+```
+
+結果は以下:
 ```console
 $ echo 123123123123123123123 | gzip -9 | ./infgen -idds
 ! infgen 3.2 output
@@ -75,7 +89,7 @@ $ echo 123123123123123123123 | gzip -9 | hexdump -C
 0000001a
 ```
 
-## 参考資料
+# 参考資料
 
 [[RFC1951]]: TODO
 

@@ -43,4 +43,15 @@ func main() {
 	emitRow(entry.DataPos, entry.Data, "Data")
 	emitRow(entry.FooterPos, binary.LittleEndian.AppendUint32(nil, entry.Footer.CRC32), "CRC32 0x%08x", entry.Footer.CRC32)
 	emitRow(entry.FooterPos+4, binary.LittleEndian.AppendUint32(nil, entry.Footer.Isize), "isize %d", entry.Footer.Isize)
+
+	// deflate
+	deflates, err := ParseDeflate(entry.Data)
+	if err != nil {
+		panic(err)
+	}
+	for _, deflate := range deflates {
+		for _, value := range deflate.Show() {
+			fmt.Printf("%d %d %s\n", value.StartPos, value.Length, value.Description)
+		}
+	}
 }
