@@ -122,9 +122,9 @@ $ go run .
 
 # 参考資料
 
-[[RFC1951]]: TODO
+[[RFC1951]]: Deutsch, P., "DEFLATE Compressed Data Format Specification version 1.3", RFC 1951, DOI 10.17487/RFC1951, May 1996, <https://www.rfc-editor.org/info/rfc1951>.
 
-[[RFC1952]]: TODO
+[[RFC1952]]: Deutsch, P., "GZIP file format specification version 4.3", RFC 1952, DOI 10.17487/RFC1952, May 1996, <https://www.rfc-editor.org/info/rfc1952>.
 
 [RFC1951]: https://datatracker.ietf.org/doc/html/rfc1951
 [RFC1952]: https://datatracker.ietf.org/doc/html/rfc1952

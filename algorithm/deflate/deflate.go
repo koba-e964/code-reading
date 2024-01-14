@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // RangeDescription is a struct for describing a range of bits.
 //
@@ -46,14 +48,14 @@ func (d *DeflateHeader) Show() []RangeDescription {
 	}
 }
 
-type UnCompressed struct {
+type Uncompressed struct {
 	StartPos uint64
 	Length   uint16
 	NLength  uint16
 	Literal  []byte
 }
 
-func (u *UnCompressed) Show() []RangeDescription {
+func (u *Uncompressed) Show() []RangeDescription {
 	var result []RangeDescription
 	result = append(result, RangeDescription{StartPos: u.StartPos, Length: 16, Description: "Length"})
 	result = append(result, RangeDescription{StartPos: u.StartPos + 16, Length: 16, Description: "NLength (inverted)"})
@@ -110,6 +112,7 @@ func formatAsBEBits(value uint64, length int) string {
 var (
 	ErrInvalidDeflate = fmt.Errorf("invalid deflate")
 	ErrInvalidLength  = fmt.Errorf("invalid length")
+	ErrInvalidBtype   = fmt.Errorf("invalid BTYPE")
 )
 
 // parseLengthDistancePair parses a length-distance pair.
@@ -118,7 +121,7 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 	// 3.2.5. Compressed blocks (length and distance codes)
 	// length
 	if firstVal < 257 || firstVal > 285 {
-		panic("invalid length")
+		return nil, ErrInvalidLength
 	}
 	var length int
 	var extraLengthBits int
@@ -259,15 +262,20 @@ func ParseDeflate(stream []byte) ([]Deflate, error) {
 			final = true
 		}
 		deflate.Header.BTYPE = byte(b.Int(2))
+		if deflate.Header.BTYPE == 0 {
+			// no compression, so skip to byte boundary
+			b.SkipToByteBoundary()
+		}
 		deflate.ContentPos = b.Position()
 		if deflate.Header.BTYPE == 0 {
 			// no compression
+			startPos := b.Position()
 			length := b.Int(16)
 			nLength := b.Int(16)
 			if length != nLength^0xffff {
 				return nil, ErrInvalidLength
 			}
-			deflate.Content = &UnCompressed{Literal: b.Bytes(int(length))}
+			deflate.Content = &Uncompressed{StartPos: startPos, Literal: b.Bytes(int(length))}
 		} else if deflate.Header.BTYPE == 1 {
 			// fixed huffman codes
 			var letters []FixedAlphabet
@@ -322,10 +330,9 @@ func ParseDeflate(stream []byte) ([]Deflate, error) {
 		} else if deflate.Header.BTYPE == 2 {
 			panic("TODO: not implemented")
 		} else {
-			panic("invalid btype")
+			return nil, ErrInvalidBtype
 		}
 		deflate.EndPos = b.Position()
-		stream = stream[1:]
 		deflates = append(deflates, deflate)
 	}
 	if b.Remaining() >= 8 {

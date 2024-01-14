@@ -57,6 +57,13 @@ func (b *BitReader) IntBE(length int) uint64 {
 	return result
 }
 
+func (b *BitReader) SkipToByteBoundary() {
+	if b.numBitsRead > 0 {
+		b.numBitsRead = 0
+		b.index++
+	}
+}
+
 // Remaining returns the number of bits remaining to be read.
 func (b *BitReader) Remaining() int {
 	return (len(b.bytes)-b.index)*8 - b.numBitsRead
