@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"io"
+	"os"
 	"time"
 )
 
@@ -65,9 +67,17 @@ func emitRowForGzip(startpos uint64, bytes []byte, explanation string, a ...any)
 }
 
 func main() {
-	stream := []byte{
-		0x1f, 0x8b, 0x08, 0x00, 0xfc, 0x59, 0x96, 0x65, 0x02, 0x03, 0x33, 0x34, 0x32, 0x36, 0xc4, 0x40,
-		0x5c, 0x00, 0x5e, 0x96, 0xa9, 0x24, 0x16, 0x00, 0x00, 0x00,
+	file := os.Stdin
+	if len(os.Args) > 1 {
+		currentFile, err := os.Open(os.Args[1])
+		if err != nil {
+			panic(err)
+		}
+		file = currentFile
+	}
+	stream, err := io.ReadAll(file)
+	if err != nil {
+		panic(err)
 	}
 	entry, err := ParseGzip(stream)
 	if err != nil {
