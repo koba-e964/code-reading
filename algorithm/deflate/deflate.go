@@ -162,7 +162,7 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 		Calculated:  length,
 	})
 	startPos = b.Position()
-	extra := b.IntBE(extraLengthBits)
+	extra := b.Int(extraLengthBits)
 	length += int(extra)
 	letters = append(letters, FixedAlphabet{
 		StartPos:    startPos,
@@ -231,7 +231,7 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 		Calculated:  distance,
 	})
 	startPos = b.Position()
-	extra = b.IntBE(extraLengthBits)
+	extra = b.Int(extraLengthBits)
 	letters = append(letters, FixedAlphabet{
 		StartPos:    startPos,
 		Length:      b.Position() - startPos,
