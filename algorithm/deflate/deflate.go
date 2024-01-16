@@ -115,39 +115,93 @@ var (
 	ErrInvalidBtype   = fmt.Errorf("invalid BTYPE")
 )
 
+// Ref: https://github.com/madler/infgen/blob/2d2300507d24b398dfc7482f3429cc0061726c8b/infgen.c#L864-L931
+type Huffman struct {
+	// The number of codes for each code length.
+	NumCodes []int
+	// The table of (length, code) -> symbol.
+	Symbols [][]int
+}
+
+func ConstructHuffman(lengths []int) *Huffman {
+	n := len(lengths)
+	maxLength := 0
+	for _, length := range lengths {
+		maxLength = max(maxLength, length)
+	}
+	numCodes := make([]int, maxLength+1)
+	symbols := make([][]int, maxLength+1)
+	for i := 0; i < n; i++ {
+		numCodes[lengths[i]]++
+	}
+	code := 0
+	for i := 1; i <= maxLength; i++ {
+		code = (code + numCodes[i-1]) << 1
+		symbols[i] = make([]int, 0, numCodes[i])
+	}
+	for i := 0; i < n; i++ {
+		length := lengths[i]
+		if length != 0 {
+			symbols[length] = append(symbols[length], i)
+		}
+	}
+	return &Huffman{
+		NumCodes: numCodes,
+		Symbols:  symbols,
+	}
+}
+
+// Returns (length, symbol, rawBits, error)
+func (h *Huffman) Decode(b *BitReader) (int, int, int, error) {
+	code := 0
+	length := 1
+	first := 0
+	for length < len(h.NumCodes) {
+		code = code*2 + int(b.Int(1))
+		count := h.NumCodes[length]
+		if code < first+count {
+			return length, h.Symbols[length][code-first], code, nil
+		}
+		first += count
+		first <<= 1
+		length++
+	}
+	return -1, -1, -1, fmt.Errorf("invalid huffman code")
+}
+
 // parseLengthDistancePair parses a length-distance pair.
-func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, firstVal int) ([]FixedAlphabet, error) {
+func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, firstHuffmanSymbol int, distanceHuffman *Huffman) ([]FixedAlphabet, error) {
 	var letters []FixedAlphabet
 	// 3.2.5. Compressed blocks (length and distance codes)
 	// length
-	if firstVal < 257 || firstVal > 285 {
+	if firstHuffmanSymbol < 257 || firstHuffmanSymbol > 285 {
 		return nil, ErrInvalidLength
 	}
 	var length int
 	var extraLengthBits int
-	if firstVal < 265 {
+	if firstHuffmanSymbol < 265 {
 		// [3, 11)
-		length = firstVal - 254
+		length = firstHuffmanSymbol - 254
 		extraLengthBits = 0
-	} else if firstVal < 269 {
+	} else if firstHuffmanSymbol < 269 {
 		// [11, 19)
-		length = 11 + (firstVal-265)*2
+		length = 11 + (firstHuffmanSymbol-265)*2
 		extraLengthBits = 1
-	} else if firstVal < 273 {
+	} else if firstHuffmanSymbol < 273 {
 		// [19, 35)
-		length = 19 + (firstVal-269)*4
+		length = 19 + (firstHuffmanSymbol-269)*4
 		extraLengthBits = 2
-	} else if firstVal < 277 {
+	} else if firstHuffmanSymbol < 277 {
 		// [35, 67)
-		length = 35 + (firstVal-273)*8
+		length = 35 + (firstHuffmanSymbol-273)*8
 		extraLengthBits = 3
-	} else if firstVal < 281 {
+	} else if firstHuffmanSymbol < 281 {
 		// [67, 131)
-		length = 67 + (firstVal-277)*16
+		length = 67 + (firstHuffmanSymbol-277)*16
 		extraLengthBits = 4
-	} else if firstVal < 285 {
+	} else if firstHuffmanSymbol < 285 {
 		// [131, 258)
-		length = 131 + (firstVal-281)*32
+		length = 131 + (firstHuffmanSymbol-281)*32
 		extraLengthBits = 5
 	} else {
 		length = 258
@@ -158,7 +212,7 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 		Length:      b.Position() - startPos,
 		Type:        "Length",
 		HuffmanCode: formatAsBEBits(firstHuffmanCode, int(b.Position()-startPos)),
-		Value:       firstVal,
+		Value:       firstHuffmanSymbol,
 		Calculated:  length,
 	})
 	startPos = b.Position()
@@ -174,7 +228,10 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 	})
 	// distance
 	startPos = b.Position()
-	distanceCode := int(b.IntBE(5))
+	distanceLength, distanceCode, distanceRaw, err := distanceHuffman.Decode(b)
+	if err != nil {
+		return nil, err
+	}
 	if distanceCode >= 30 {
 		return nil, ErrInvalidLength
 	}
@@ -226,7 +283,7 @@ func parseLengthDistancePair(b *BitReader, startPos, firstHuffmanCode uint64, fi
 		StartPos:    startPos,
 		Length:      b.Position() - startPos,
 		Type:        "Distance",
-		HuffmanCode: formatAsBEBits(uint64(distanceCode), 5),
+		HuffmanCode: formatAsBEBits(uint64(distanceRaw), distanceLength),
 		Value:       distanceCode,
 		Calculated:  distance,
 	})
@@ -278,40 +335,44 @@ func ParseDeflate(stream []byte) ([]Deflate, error) {
 			deflate.Content = &Uncompressed{StartPos: startPos, Literal: b.Bytes(int(length))}
 		} else if deflate.Header.BTYPE == 1 {
 			// fixed huffman codes
+			lengthLengths := make([]int, 288)
+			for i := 0; i < 144; i++ {
+				lengthLengths[i] = 8
+			}
+			for i := 144; i < 256; i++ {
+				lengthLengths[i] = 9
+			}
+			for i := 256; i < 280; i++ {
+				lengthLengths[i] = 7
+			}
+			for i := 280; i < 288; i++ {
+				lengthLengths[i] = 8
+			}
+			lengthHuffman := ConstructHuffman(lengthLengths)
+			distanceLengths := make([]int, 30)
+			for i := 0; i < 30; i++ {
+				distanceLengths[i] = 5
+			}
+			distanceHuffman := ConstructHuffman(distanceLengths)
 			var letters []FixedAlphabet
 			finished := false
 			for !finished {
 				startPos := b.Position()
-				head := int(b.IntBE(7))
-				var val int
-				var huffmanCode uint64
-				if head < 0x18 {
-					huffmanCode = uint64(head)
-					val = head + 0x100
-				} else if head < 0x60 {
-					aux := int(b.IntBE(1))
-					huffmanCode = uint64(head*2 + aux)
-					val = (head-0x18)*2 + aux
-				} else if head < 0x64 {
-					aux := int(b.IntBE(1))
-					huffmanCode = uint64(head*2 + aux)
-					val = (head-0x60)*2 + aux + 280
-				} else {
-					aux := int(b.IntBE(2))
-					huffmanCode = uint64(head*4 + aux)
-					val = (head-0x64)*4 + aux + 144
+				huffmanLength, huffmanSymbol, huffmanCode, err := lengthHuffman.Decode(b)
+				if err != nil {
+					return nil, err
 				}
-				// val is in [0, 288)
+				// huffmanSymbol is in [0, 288)
 				var ty string
-				if val == 256 {
+				if huffmanSymbol == 256 {
 					ty = "End"
 					finished = true
-				} else if val < 256 {
+				} else if huffmanSymbol < 256 {
 					// literal
 					ty = "Literal"
-				} else if val < 286 {
+				} else if huffmanSymbol < 286 {
 					// length-distance pair
-					parsedLetters, err := parseLengthDistancePair(b, startPos, huffmanCode, val)
+					parsedLetters, err := parseLengthDistancePair(b, startPos, uint64(huffmanCode), huffmanSymbol, distanceHuffman)
 					if err != nil {
 						return nil, err
 					}
@@ -322,8 +383,8 @@ func ParseDeflate(stream []byte) ([]Deflate, error) {
 					StartPos:    startPos,
 					Length:      b.Position() - startPos,
 					Type:        ty,
-					HuffmanCode: formatAsBEBits(huffmanCode, int(b.Position()-startPos)),
-					Value:       val,
+					HuffmanCode: formatAsBEBits(uint64(huffmanCode), huffmanLength),
+					Value:       huffmanSymbol,
 				})
 			}
 			deflate.Content = &FixedHuffman{Letters: letters}
