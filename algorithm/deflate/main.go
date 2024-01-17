@@ -75,6 +75,7 @@ func main() {
 		}
 		file = currentFile
 	}
+	defer file.Close()
 	stream, err := io.ReadAll(file)
 	if err != nil {
 		panic(err)
