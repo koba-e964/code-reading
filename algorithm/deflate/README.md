@@ -169,6 +169,12 @@ $ echo 123123123123123123123 | gzip -9 | go run .
 [0038,003f)  7   0007: 00    .0000000          End "0000000" -> 256
 ```
 
+# 無圧縮つ gzip を作るツールについて
+以下のコマンドでインストールできる。
+```bash
+go install github.com/koba-e964/code-reading/algorithm/deflate/cmd/gnozip
+```
+
 # 参考資料
 
 [[RFC1951]]: Deutsch, P., "DEFLATE Compressed Data Format Specification version 1.3", RFC 1951, DOI 10.17487/RFC1951, May 1996, <https://www.rfc-editor.org/info/rfc1951>.
