@@ -1,4 +1,4 @@
-package main
+package gzip
 
 // BitReader is a struct for reading bits from a byte slice.
 //

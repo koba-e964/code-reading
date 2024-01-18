@@ -140,11 +140,11 @@ $ echo 123123123123123123123 | gzip -9 | hexdump -C
 また、Go で作ったツールで中身の解析を行うと以下のようになっている。
 
 ```
-$ echo 123123123123123123123 | gzip -9 | go run .
+$ echo 123123123123123123123 | gzip -9 | go run ./cmd/deflate-view
 0000: 1f 8b       ID (0x1f 0x8b)
 0002: 08          CM
 0003: 00          FLG
-0004: 06 c4 a5 65 MTIME 2024-01-15T23:47:18Z
+0004: 38 89 a8 65 MTIME 2024-01-18T02:13:12Z
 0008: 02          XFL
 0009: 03          OS
 000a: 33 34 32 36 Data
@@ -169,10 +169,10 @@ $ echo 123123123123123123123 | gzip -9 | go run .
 [0038,003f)  7   0007: 00    .0000000          End "0000000" -> 256
 ```
 
-# 無圧縮つ gzip を作るツールについて
+# 無圧縮の gzip を作るツールについて
 以下のコマンドでインストールできる。
 ```bash
-go install github.com/koba-e964/code-reading/algorithm/deflate/cmd/gnozip
+go install github.com/koba-e964/code-reading/algorithm/deflate/cmd/gnozip@latest
 ```
 
 # 参考資料

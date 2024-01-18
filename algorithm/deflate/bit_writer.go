@@ -1,4 +1,4 @@
-package main
+package gzip
 
 // BitWriter is a struct for writing bits to a byte slice.
 //

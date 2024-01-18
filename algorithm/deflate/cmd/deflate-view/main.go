@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"time"
+
+	gzip "github.com/koba-e964/code-reading/algorithm/deflate"
 )
 
 type TableEmitter struct {
@@ -80,7 +82,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	entry, err := ParseGzip(stream)
+	entry, err := gzip.ParseGzip(stream)
 	if err != nil {
 		panic(err)
 	}
@@ -95,7 +97,7 @@ func main() {
 	emitRowForGzip(entry.FooterPos+4, binary.LittleEndian.AppendUint32(nil, entry.Footer.Isize), "isize %d", entry.Footer.Isize)
 
 	// deflate
-	deflates, err := ParseDeflate(entry.Data)
+	deflates, err := gzip.ParseDeflate(entry.Data)
 	if err != nil {
 		panic(err)
 	}
