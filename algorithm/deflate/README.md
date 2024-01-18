@@ -169,11 +169,22 @@ $ echo 123123123123123123123 | gzip -9 | go run ./cmd/deflate-view
 [0038,003f)  7   0007: 00    .0000000          End "0000000" -> 256
 ```
 
-# 無圧縮の gzip を作るツールについて
+# このディレクトリーに含まれるツール
+## 無圧縮の gzip を作るツール
 以下のコマンドでインストールできる。
 ```bash
 go install github.com/koba-e964/code-reading/algorithm/deflate/cmd/gnozip@latest
 ```
+
+コマンド名は gnozip である。
+
+## gzip ファイルの中身を調べるツール
+以下のコマンドでインストールできる。
+```bash
+go install github.com/koba-e964/code-reading/algorithm/deflate/cmd/deflate-view@latest
+```
+
+コマンド名は deflate-view である。
 
 # 参考資料
 
