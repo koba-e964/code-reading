@@ -13,6 +13,50 @@
 - perl_groups.go: Perl 互換用のグループ (charGroup) を定義する。
 - compile.go: syntax.Regexp を syntax.Prog に変換する。
 
+### regexp.go
+型 syntax.Regexp を公開する。
+
+syntax.Regexp は以下のような型である (https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/regexp.go;l=16-27):
+```go
+// A Regexp is a node in a regular expression syntax tree.
+type Regexp struct {
+	Op       Op // operator
+	Flags    Flags
+	Sub      []*Regexp  // subexpressions, if any
+	Sub0     [1]*Regexp // storage for short Sub
+	Rune     []rune     // matched runes, for OpLiteral, OpCharClass
+	Rune0    [2]rune    // storage for short Rune
+	Min, Max int        // min, max for OpRepeat
+	Cap      int        // capturing index, for OpCapture
+	Name     string     // capturing name, for OpCapture
+}
+```
+
+Sub0 は Sub が短い場合のための backing array である。以下のようなパターンがよく見られる:
+```go
+re.Sub = re.Sub0[:0]
+re.Sub = append(re.Sub, 値)
+...
+```
+このとき、re.Sub の長さが 1 以下であれば、re.Sub0 が re.Sub の backing array となり、余分なメモリー確保が減らせる。(参考: [Go Slices: usage and internals](https://go.dev/blog/slices-intro))
+
+Rune と Rune0 も同様。
+
+### prog.go
+
+型 syntax.Prog を公開する。
+
+syntax.Prog は以下のような型である (https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/prog.go;l=17-22):
+```go
+// A Prog is a compiled regular expression program.
+type Prog struct {
+	Inst   []Inst
+	Start  int // index of start instruction
+	NumCap int // number of InstCapture insts in re
+}
+```
+TODO
+
 ### parse.go
 正規表現の文字列を syntax.Regexp に変換する。また型 charGroup を定義する。
 
@@ -41,4 +85,8 @@
 - [L291-L575](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=291-575): parser 内部の stack を扱うメソッド。
 - [L577-L883](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=577-883): parser 内部で使う便利メソッド。
 - [L885-L1823](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=885-1823): syntax.Parse の本丸。`(値 値の型, rest string, err error)` を返す関数が多い。
+  - [L1573-L1823](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=1573-1823): classGroup の定義および文字類 (class) のパースを行う。
 - [L1825-L2115](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=1825-2115): 文字類 (class) を扱う関数。
+
+### compile.go
+TODO

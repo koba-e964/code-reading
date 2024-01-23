@@ -11,7 +11,7 @@ func main() {
 		panic(err)
 	}
 	result = result.Simplify()
-	println(result.String())
+	fmt.Printf("%#v\n", result)
 	prog, err := syntax.Compile(result)
 	if err != nil {
 		panic(err)
