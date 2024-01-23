@@ -1,0 +1,11 @@
+digraph dep {
+    node [
+        shape = rect;
+    ]
+    "perl_groups.go"
+    Regexp [label = "syntax.Regexp\n(regexp.go)"]
+    Prog [label = "syntax.Prog\n(prog.go)"]
+    string -> Regexp [label = "syntax.Parse\n(parse.go)"]
+    Regexp -> Regexp [label = "syntax.Simplify\n(simplify.go)"]
+    Regexp -> Prog [label = "syntax.Compile\n(compile.go)"]
+}
