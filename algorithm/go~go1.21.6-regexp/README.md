@@ -55,7 +55,15 @@ type Prog struct {
 	NumCap int // number of InstCapture insts in re
 }
 ```
-TODO
+
+syntax.Inst は命令を表す。
+命令の例を挙げる。
+- InstAlt: https://qiita.com/kobae964/items/81058a229dced09dd2ab#vm の split に相当。実行を分岐する。
+- InstMatch: この命令を実行したらマッチしたことになる。
+- InstFail: この命令を実行したらマッチしなかったことになる。
+- InstRune, InstRune1: https://qiita.com/kobae964/items/81058a229dced09dd2ab#vm の char に相当。文字を 1 文字読み適切な文字かどうか検査する。適切でなければ失敗する。
+
+これらの命令の解釈は (regexp/)exec.go で与えられる。
 
 ### parse.go
 正規表現の文字列を syntax.Regexp に変換する。また型 charGroup を定義する。
