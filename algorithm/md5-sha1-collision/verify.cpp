@@ -1,5 +1,6 @@
 #include "ubc_check.h"
 
+#include <cassert>
 #include <iostream>
 
 using namespace std;

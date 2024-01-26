@@ -43,3 +43,7 @@ jobs:
             go build -v ./...
             go test -v ./...
           done
+      - name: Check md5-sha1-collision
+        run: |
+          cd algorithm/md5-sha1-collision
+          ./run.sh
