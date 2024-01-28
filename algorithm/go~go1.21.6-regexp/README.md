@@ -1,4 +1,9 @@
-[go@go1.21.6 の regexp パッケージ](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/) を読む。
+[go@go1.21.6 の regexp パッケージ](https://pkg.go.dev/regexp@go1.21.6) を読む。
+
+なお、以下の文字を使う。
+
+- $m$: パターン長
+- $n$: 文字列長
 
 ## regexp/syntax
 依存関係は以下。なおデータ型の変換を担当する関数・ファイルは辺で表している。
@@ -74,15 +79,15 @@ syntax.Inst は命令を表す。
 - このように、文法に従って再帰的に構文解析するパーサーを作る。
   ```go
   func Expr(t string) (e *expr, rest string, err error) {
-    if t[0] == '+' {
-        val, rest, err := UnaryPlus(t)
-        if err != nil {
-            return nil, "", err
-        }
-        t = rest
-        return ..., t, nil
-    }
-    ...
+  	if t[0] == '+' {
+  		val, rest, err := UnaryPlus(t)
+  		if err != nil {
+  			return nil, "", err
+  		}
+  		t = rest
+  		return ..., t, nil
+  	}
+  	...
   }
   ```
 
@@ -97,4 +102,42 @@ syntax.Inst は命令を表す。
 - [L1825-L2115](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/syntax/parse.go;l=1825-2115): 文字類 (class) を扱う関数。
 
 ### compile.go
+frag: コード片
 TODO
+
+## regexp
+### マシーンの分岐
+onePass, backtrack, match の 3 種類を使い分ける。
+
+https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/exec.go;l=531-545
+### backtrack.go
+普通の DFS をしてマッチするかどうか調べる。
+コードは以下のような感じ。
+```go
+func tryBacktrack(b *bitState, s string, pc uint32, pos int)
+```
+
+### exec.go
+https://qiita.com/kobae964/items/81058a229dced09dd2ab の Thompson's VM のアイディアを使う。backtrack との違いは、1 文字ずつ読むためメモリー使用量が O(mn) ではなく O(m) で済むこと。
+
+実装の概略は以下の通り。1 文字ごとにキューで状態を管理する。
+```go
+func (m *machine) match(s string) {
+	runq, nextq := queue{}, queue{}
+	for _, c := range s {
+		m.step(runq, nextq, c) // runq の状態から c を読んで行き着く状態を調べ、nextq に入れる。
+		runq = nextq
+		nextq = queue{}
+	}
+}
+```
+
+1 文字読む関数の実際の signature は以下である。キャプチャーを扱う都合上 pos や nextPos を引数として受け取る。
+([exec.go#L260](https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/exec.go;l=260))
+```go
+func (m *machine) step(runq, nextq *queue, pos, nextPos int, c rune, nextCond *lazyFlag)
+```
+
+### onepass.go
+TODO: どのように動くか
+TODO: onePassProg の条件は何か
