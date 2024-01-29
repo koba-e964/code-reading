@@ -139,5 +139,6 @@ func (m *machine) step(runq, nextq *queue, pos, nextPos int, c rune, nextCond *l
 ```
 
 ### onepass.go
-TODO: どのように動くか
-TODO: onePassProg の条件は何か
+pos も pc も 1 個だけ覚えておけばいいような syntax.Prog かどうかの判定、および onePassProg への変換を行う。
+
+実際のソースコードは https://cs.opensource.google/go/go/+/refs/tags/go1.21.6:src/regexp/exec.go;l=396-510 である。
