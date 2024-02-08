@@ -38,7 +38,7 @@ https://github.com/tyler-smith/go-bip32
 - 暗号技術の操作にふさわしくない big.Int を使っている
   - [https://pkg.go.dev/math/big#Int](https://pkg.go.dev/math/big#Int)
     > Note that methods may leak the Int's value through timing side-channels. Because of this and because of the scope and complexity of the implementation, Int is not well-suited to implement cryptographic operations. The standard library avoids exposing non-trivial Int methods to attacker-controlled inputs and the determination of whether a bug in math/big is considered a security vulnerability might depend on the impact on the standard library.
-  - 参考資料: [https://simple-minds-think-alike.moritamorie.com/entry/crypto-ecdh](https://simple-minds-think-alike.moritamorie.com/entry/crypto-ecdh)
+  - 参考資料: [simple-minds-think-alike.moritamorie.com/entry/crypto-ecdh (Internet Archive)](https://web.archive.org/web/20230601112654if_/https://simple-minds-think-alike.moritamorie.com/entry/crypto-ecdh)
 
 https://github.com/libs4go/crypto/tree/main/elliptic
 - 暗号技術の操作にふさわしくない big.Int を使っている
