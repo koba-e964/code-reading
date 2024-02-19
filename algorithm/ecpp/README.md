@@ -147,14 +147,10 @@ j-invariant に関する事実
 
 [[AO1993]]: Atkin, A. Oliver L., and François Morain. "Elliptic curves and primality proving." Mathematics of computation 61.203 (1993): 29-68.
 
-[[R1]]: https://mathoverflow.net/questions/165797/class-groups-of-orders
-
 [Sil2016]: Silverman, Joseph H. The Arithmetic Of Elliptic Curves. 2nd ed., Springer-Verlag, GTM 106, 2016.
 
 [[Tsu2017]]: ガウスの種の理論 (Genus Theory), https://tsujimotter.hatenablog.com/entry/genus-theory
 
 [AO1993]: https://www.ams.org/journals/mcom/1993-61-203/S0025-5718-1993-1199989-X/S0025-5718-1993-1199989-X.pdf
-
-[R1]: https://mathoverflow.net/questions/165797/class-groups-of-orders
 
 [Tsu2017]: https://tsujimotter.hatenablog.com/entry/genus-theory
