@@ -112,7 +112,8 @@ func polyReduce(a []GF) []GF {
 	return nil
 }
 
-func polyGCD(a, b []GF) ([]GF, []GF, []GF) {
+// g = a * s + b * t
+func polyGCD(a, b []GF) (g []GF, s []GF, t []GF) {
 	a = polyReduce(a)
 	b = polyReduce(b)
 	if len(b) > 0 && len(a) > 2 {
@@ -284,8 +285,8 @@ func main() {
 		val GF
 	}{
 		{},
-		{{4, 0x10}},
-		{{4, 0x10}, {8, 0x20}},
+		{{pos: 4, val: 0x10}},
+		{{pos: 4, val: 0x10}, {pos: 8, val: 0x20}},
 	}
 	for _, perturbation := range perturbations {
 		copyI := make([]GF, 28)
