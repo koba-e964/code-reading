@@ -146,7 +146,9 @@ func main() {
 	}
 	ignores := make(map[string]*Ignore)
 	for _, ignore := range config.Ignores {
-		ignores[ignore.URL] = &ignore
+		// For handling of https://go.dev/blog/loopvar-preview
+		ignoreCopied := ignore
+		ignores[ignore.URL] = &ignoreCopied
 	}
 
 	numErrors := 0
