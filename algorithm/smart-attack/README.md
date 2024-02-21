@@ -1,3 +1,10 @@
+# Smart-attack
+このページでは、ある種の楕円曲線に対する攻撃手法を扱う。この攻撃手法は Smart [[Sma1999]] により提案され、俗な呼び方として以下がある。
+- Smart-ASS attack (https://safecurves.cr.yp.to/transfer.html)
+- Additive transfer (https://safecurves.cr.yp.to/transfer.html)
+
+この攻撃が適用できる楕円曲線は、実用上まったく役に立たない。
+
 ## 準備
 Weierstrass 型の楕円曲線とは以下のような式で定義される曲線である:
 $$E\colon y^2 + a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6$$
