@@ -1,11 +1,26 @@
 有限体上の楕円曲線の点の個数の計算を行う Schoof のアルゴリズムについて書く。
+楕円曲線 $E: y^{2} = x^{3}+ax^{2} + bx + c$ を考え、それの有限体の上の還元 $E' := E(\mathbb{F}_{q})$ を考える。 $|E'|$ を求める手法を理解するのがこのページの目標である。
+
+たちどころに明らかなことは以下である。
+- $E'$ は有限集合であり、大きさは $q^2 + 1$ 以下である。
+  - 無限遠点を除くと $\mathbb{F}_{q} \times \mathbb{F}_{q}$ の部分集合なので当然。
+- $E'$ の大きさは $2q + 1$ 以下である。
+  - 無限遠点を除くとそれぞれの x に対して y は高々 2 通りしかない。
+
+$\overline{E'}$ を $\overline{E'} := E(\overline{\mathbb{F}_{q}})$ と定義する。
+Frobenius 写像 $\phi: \overline{E'} \to \overline{E'}$ を $\phi(x,y) := (x^q, y^q)$ で定義すると、 $\phi^2 -t \phi + q = 0$ が成立する有理整数 $t$ が存在する。
+- この式の左辺に形式的に $\phi \leftarrow 1$ を代入して得られる式 $1-t+q$ が求める位数である。
+- $E' = E(\mathbb{F}_{q})$ の上で考えると $\phi = 1$ であるため、 $1-t+q=0$ となり (上の結果を認めれば) 当たり前であることに注意。拡大体の上で考えるべきである。
+- $|t| \le 2 \sqrt{q}$ が成立する。これから、$|E'|$ は $q+1\pm 2\sqrt{q}$ の範囲内にあることがわかる。(Hasse の定理)
+
+TODO: division polynomial の説明を書く。
 
 # 疑問点
 ## 1: division polynomial が既約でないとき
 楕円曲線 $E: y^{2} = x^{3}+7$ を考える。これの 3 次の division polynomial は $\psi_{3}(x) = 3x^{4} + 84x = 3x(x^3+28)$ である。これは有理数の根 $x=0$ を持つので、 ${} \bmod \psi_{3}(x)$ で考えると 0 でない多項式が逆元を持たないことがありえる。
 
 $q := 31, E' := E(\mathbb{F}_{q})$ とする。
-$P := (x,y)$ とし、Frobenius 写像 $\phi: E' \to E'$ を適用して $\psi_{3}(x)$ で mod をとった結果を見ると
+$P := (x,y)$ とし、Frobenius 写像 $\phi: \overline{E'} \to \overline{E'}$ を適用して $\psi_{3}(x)$ で mod をとった結果を見ると
 - $\phi(P) = (x^{31}, y^{31}) \equiv (25x, y) \pmod{\psi_{3}(x), q}$
   - $(-28)^{10} \equiv 25 \pmod{31}$
 - $\phi^2(P) = (x^{961}, y^{961}) \equiv (5x, y) \pmod{\psi_{3}(x), q}$
@@ -33,8 +48,9 @@ $\psi_l(x)$ の任意の約数 $f(x)$ に対して、 $(x, y)$ の $E(\mathbb{F}
 要するに別々の事情が 2 個重なっていただけであった。
 
 ## 2: division polynomial が有理根を持つとき
+ある $a \in \mathbb{F} _ {q}$ に対して $\psi_l(a) = 0$ (in $\mathbb{F} _ {q}$) が成立する場合について。
 上の理屈だと $x - a$ を法として計算すればよいので計算が簡単である。
-しかしこのような a は有限個しか存在しない。 $(x, y)$ は x-a を法とするとき、楕円曲線上にあるかそれの [twist](https://safecurves.cr.yp.to/twist.html) の上にあるかのどちらかである。どちらにせよ有限位数なので、 $l$ が位数を割る必要がある以上そのような $l$ は有限個しかない。
+しかしこのような $a$ は有限個しか存在しない。 $(x, y)$ は $x-a$ を法とするとき、楕円曲線上にあるかそれの [twist](https://safecurves.cr.yp.to/twist.html) の上にあるかのどちらかである。元の楕円曲線も twist も有限位数なので、 $l$ が位数を割る必要がある以上そのような $l$ は有限個しかない。
 
 例:
 楕円曲線 $E: y^{2} = x^{3}+7$ を考え、 $q := 31, E' := E(\mathbb{F}_{q})$ とする。 $t = 31 + 1 - 21 = 11$ より twist の位数は $31 + 1 + 11 = 43$ である。 $\psi_l(x)$ が有理根を持つような $l$ は 3, 7, 43 に限られる。
@@ -59,10 +75,18 @@ sage: factor(31^3 + 1 + 308)
 ## 3: modular polynomial
 modular polynomial [[KIY]] について。
 
+実数体上で議論を行うため、[Weierstraß の 楕円関数](https://ja.wikipedia.org/w/index.php?title=%E3%83%B4%E3%82%A1%E3%82%A4%E3%82%A8%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%88%E3%83%A9%E3%82%B9%E3%81%AE%E6%A5%95%E5%86%86%E5%87%BD%E6%95%B0&oldid=95955129)から逃れることはできない。
+
+TODO: modular polynomial の motivation
+TODO: modular polynomial の計算手法
+TODO: $\phi$ の特性多項式が因数分解できること ($p^2-4t$ が平方剰余であること) と、modular polynomial が有理根を持つことの関係
+
 # 参考文献
 [[KIY]]: 小暮淳, 伊豆哲也, and 横山和弘. "Atkin, Elkies らによる Schoof のアルゴリズム改良の実装について (数式処理における理論と応用の研究)." 数理解析研究所講究録 1038 (1998): 230-243.
 
 [[Mus2005]]: Musiker, Gregg. "Schoof's Algorithm for Counting Points on $E(\mathbb{F}_{q})$." (2005).
+
+[CMP]: https://math.mit.edu/~drew/ClassicalModPolys.html
 
 [KIY]: https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61961/1/1038-33.pdf
 
