@@ -17,5 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
       - name: Check hyperlinks
-        run: go run check_links.go
+        run: |
+          go install github.com/koba-e964/link-checker@latest
+          link-checker
