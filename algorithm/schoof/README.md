@@ -15,6 +15,12 @@ Frobenius 写像 $\phi: \overline{E'} \to \overline{E'}$ を $\phi(x,y) := (x^q,
 - $|t| \le 2 \sqrt{q}$ が成立する。これから、$|E'|$ は $q+1\pm 2\sqrt{q}$ の範囲内にあることがわかる。(Hasse の定理)
 
 楕円曲線 $E$ を固定し、その定義体を $K$ とする。division polynomial $\psi_l(x)$ とは、 $l$ 分点の x 座標で消える多項式である。つまり $lP = O$ なる $P$ 全てにわたる $x-P_x$ の積の何らかのスカラー倍である。 $P_x$ そのものは $K$ の元とは限らず一般には $\overline{K}$ の元であるが、division polynomial は $K$ 係数である。
+
+環 $\mathbb{F} _ {q}[x, y]/(y^2 - x^3 - ax - b, \psi_l(x))$ 上で演算を行い、上の $t$ を ${\bmod}\ l$ で求めようというのが基本方針である。より詳しくは以下。
+1. $\phi^2((x, y)) + q(x, y)$ を計算する。
+2. $\phi^2((x, y)) + q(x, y) = t_l\phi((x, y))$ なる $t_l$ がどれなのか、 $-(l-1)/2 \le t_l \le (l-1)/2$ の範囲で全探索する。
+3. $t \equiv t_l \pmod{l}$ という情報が得られた。これを十分多数の $l$ に対して行い中国剰余定理から $t$ を求める。
+
 詳しくは [[KIY]] などを参照されたい。
 
 ## 疑問点
@@ -84,7 +90,7 @@ modular polynomial には以下の著しい性質がある。
 - $$\Phi_l(x, j(\tau)) = (x-j(l\tau)) \prod_{0 \le i < l} (x-j\left(\frac{\tau+i}{l}\right))$$
 -  $\Phi_l(x, j(\tau))$ の係数は $\mathbb{Z}[j(\tau)]$ の元である。
 
-また、以下の 3 つは同値であるようである。
+また、 $j \neq 0, 1728$ のとき、以下の 3 つは同値であるようである。 ([[Sch1995], Prop. 6.2] など)
 - $\phi$ の特性多項式が因数分解できること ($t^2-4q$ が ${\bmod}\ l$ の平方剰余であること)
 - modular polynomial が有理根を持つこと
 - division polynomial が $(l-1)/2$ 次の因子を持つこと
@@ -95,6 +101,8 @@ modular polynomial には以下の著しい性質がある。
   - modular polynomial の有理根として求められる。
 2. j~ から曲線を復元する
 3. F_l を求める。 $F_l(x) = \prod_{1 \le i \le (l-1)/2} (x-\wp(i\tau_1/l))$ は有理整数の係数を持ち、 $F_l(\wp(z))$ は関数の間のある等式を満たすので、そこから係数を求める。
+
+また $j = 0, 1728$ のときには Cornacchia's algorithm が適用できるようである。([[Sch1995], Section 4])
 
 詳しくは [[Sch1995]] を参照されたい。
 
@@ -111,10 +119,12 @@ $y^2 = x^3 + ax + b$ に対して、 $j = 1728 \cdot 4a^3/(4a^3+27b^2)$ であ�
 
 [[Mus2005]]: Musiker, Gregg. "Schoof's Algorithm for Counting Points on $E(\mathbb{F} _ {q})$." (2005).
 
+[[Sch1995]]: Schoof, René. "Counting points on elliptic curves over finite fields." Journal de théorie des nombres de Bordeaux 7.1 (1995): 219-254.
+
 [CMP]: https://math.mit.edu/~drew/ClassicalModPolys.html
 
 [KIY]: https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61961/1/1038-33.pdf
 
 [Mus2005]: https://www-users.cse.umn.edu/~musiker/schoof.pdf
 
-[Sch1995]: http://www.numdam.org/item/JTNB_1995__7_1_219_0.pdf
+[Sch1995]: http://www.numdam.org/item/JTNB_1995__7_1_219_0/
