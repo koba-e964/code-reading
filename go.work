@@ -1,7 +1,9 @@
 go 1.21
 
-use ./algorithm/bip32
+use (
+	./algorithm/bip32
 
-use ./algorithm/deflate
+	./algorithm/deflate
 
-use ./algorithm/go~go1.21.6-regexp
+	./algorithm/go~go1.21.6-regexp
+)
