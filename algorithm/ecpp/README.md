@@ -1,3 +1,4 @@
+# 素数性の証明アルゴリズム ECPP
 ## 楕円曲線の位数について
 
 [Sil2016] Thm. V.2.3.1
@@ -5,7 +6,6 @@
 $E = E(\mathbb{F} _ q)$ を楕円曲線とする。
 $\phi_p : (x, y) \mapsto (x^q, y^q)$ をフロベニウス自己準同型とする。また $a = q + 1 - |E(\mathbb{F} _ q)|$ とする。
 - $\phi_p^2 - a\phi_p + q = 0$ in $\mathrm{End}(E)$
-
 
 重要事実:
 

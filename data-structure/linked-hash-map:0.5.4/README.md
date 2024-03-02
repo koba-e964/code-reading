@@ -1,3 +1,4 @@
+# Linked Hash Map (linked_hash_map:0.5.4)
 [linked_hash_map:0.5.4](https://github.com/contain-rs/linked-hash-map/tree/0531e100ef052fd49b2f465abf96cd88aea84692/src)
 
 ```
