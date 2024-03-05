@@ -24,7 +24,7 @@ considered_alternatives = [
 
 [[ignores]]
 url = "https://mathoverflow.net/questions/207922/quickest-and-or-most-elementary-proof-of-principal-iff-splits-completely"
-codes = [403]
+codes = [200, 403]
 reason = """
 This URL seems to sometimes return 403 to requests from GitHub Actions' runners,
 and the issue cannot be handled with retries."""
