@@ -1,0 +1,175 @@
+p = 5
+p = 13
+  p = 13, A = 7, d = 11, is_square(d) = False
+    montgomery_order = 8
+    edwards_order = 8
+    jacobi_quartic_order = 8
+  p = 13, A = 8, d = 2, is_square(d) = False
+    montgomery_order = 16
+    edwards_order = 16
+    jacobi_quartic_order = 16
+  p = 13, A = 10, d = 8, is_square(d) = False
+    montgomery_order = 16
+    edwards_order = 16
+    jacobi_quartic_order = 16
+p = 17
+  p = 17, A = 7, d = 7, is_square(d) = False
+    montgomery_order = 24
+    edwards_order = 24
+    jacobi_quartic_order = 24
+  p = 17, A = 13, d = 14, is_square(d) = False
+    montgomery_order = 24
+    edwards_order = 24
+    jacobi_quartic_order = 24
+  p = 17, A = 14, d = 12, is_square(d) = False
+    montgomery_order = 16
+    edwards_order = 16
+    jacobi_quartic_order = 16
+p = 29
+  p = 29, A = 4, d = 19, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+  p = 29, A = 5, d = 12, is_square(d) = False
+    montgomery_order = 24
+    edwards_order = 24
+    jacobi_quartic_order = 24
+  p = 29, A = 14, d = 21, is_square(d) = False
+    montgomery_order = 24
+    edwards_order = 24
+    jacobi_quartic_order = 24
+  p = 29, A = 20, d = 15, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+  p = 29, A = 21, d = 8, is_square(d) = False
+    montgomery_order = 24
+    edwards_order = 24
+    jacobi_quartic_order = 24
+  p = 29, A = 23, d = 27, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+p = 37
+  p = 37, A = 7, d = 20, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 37, A = 8, d = 29, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 37, A = 10, d = 24, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 37, A = 19, d = 8, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+  p = 37, A = 24, d = 2, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 37, A = 25, d = 6, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 37, A = 26, d = 15, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 37, A = 31, d = 35, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 37, A = 34, d = 32, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+p = 41
+  p = 41, A = 8, d = 24, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 41, A = 14, d = 30, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 41, A = 16, d = 22, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 41, A = 19, d = 7, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 41, A = 21, d = 17, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+  p = 41, A = 29, d = 15, is_square(d) = False
+    montgomery_order = 32
+    edwards_order = 32
+    jacobi_quartic_order = 32
+  p = 41, A = 30, d = 35, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 41, A = 31, d = 19, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 41, A = 37, d = 38, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+p = 53
+  p = 53, A = 4, d = 35, is_square(d) = False
+    montgomery_order = 64
+    edwards_order = 64
+    jacobi_quartic_order = 64
+  p = 53, A = 5, d = 45, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 53, A = 7, d = 23, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 53, A = 14, d = 39, is_square(d) = False
+    montgomery_order = 56
+    edwards_order = 56
+    jacobi_quartic_order = 56
+  p = 53, A = 22, d = 8, is_square(d) = False
+    montgomery_order = 56
+    edwards_order = 56
+    jacobi_quartic_order = 56
+  p = 53, A = 23, d = 14, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 53, A = 34, d = 5, is_square(d) = False
+    montgomery_order = 56
+    edwards_order = 56
+    jacobi_quartic_order = 56
+  p = 53, A = 35, d = 12, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 53, A = 36, d = 27, is_square(d) = False
+    montgomery_order = 64
+    edwards_order = 64
+    jacobi_quartic_order = 64
+  p = 53, A = 41, d = 41, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
+  p = 53, A = 47, d = 51, is_square(d) = False
+    montgomery_order = 40
+    edwards_order = 40
+    jacobi_quartic_order = 40
+  p = 53, A = 50, d = 48, is_square(d) = False
+    montgomery_order = 48
+    edwards_order = 48
+    jacobi_quartic_order = 48
