@@ -4,7 +4,7 @@
 $\mathcal{E}$ を群 Edwards25519 とする。
 $$-x^2 + y^2 = 1-\frac{121665}{121666}x^2y^2$$
 $P \in \mathcal{E}$ を $P_y = 3$ で $P_x$ が偶数である点とする。このとき、 $lP$ は位数が 8 である。よって $P$ は位数が $8l$ ($l$ は素数) であり、 $\mathcal{E}$ が位数 $8l$ の巡回群であることがわかる。
-- $\mathcal{E}$ の生成元、および本当に位数が $8l$ であることについては [prove_order.log](prove_order.log) を参照すること。
+- $\mathcal{E}$ の生成元、および本当に位数が $8l$ であることについては [prove_order.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/prove_order.log) を参照すること。
 
 $2\mathcal{E}/\mathcal{E}[4]$ は位数が素数 $l$ である。 $\mathcal{E}$ の上で計算するのはやりにくく脆弱性の原因となるので、この群の上で計算ができるようにラップするのが Ristretto [[Rist]] の役目である。ここで、記法は以下の通り。
 - $r\mathcal{E} := \{rx \mid x \in \mathcal{E}\}$
@@ -81,7 +81,7 @@ False
 ```
 
 $\mathcal{E}[4] = \{(0, 1), (0, -1), (\pm \sqrt{-1}, 0)\}$ が成立する。ここで、
-- $\sqrt{-1}$ は $-1$ の平方根であって $\mathbb{F} _ p^+$ の元であるもの、具体的には `0x2b8324804fc1df0b2b4d00993dfbd7a72f431806ad2fe478c4ee1b274a0ea0b0` を指す。(https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/field_radix51.go#L16-L20, [encoding.log](encoding.log))
+- $\sqrt{-1}$ は $-1$ の平方根であって $\mathbb{F} _ p^+$ の元であるもの、具体的には `0x2b8324804fc1df0b2b4d00993dfbd7a72f431806ad2fe478c4ee1b274a0ea0b0` を指す。(https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/field_radix51.go#L16-L20, [encoding.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/encoding.log))
 - $(0, 1)$ は位数 1、 $(0, -1)$ は位数 2、 $(\pm \sqrt{-1}, 0)$ は位数 4 である。
 - $(x, y) + (0, 1) = (x, y)$
 - $(x, y) + (0, -1) = (-x, -y)$
@@ -144,7 +144,7 @@ $2\mathcal{E}/\mathcal{E}[4]$ の元 $(x, y)$ を 32 バイトのデータに変
 [^rotate]: 実装では $y = 0$ かどうかのテストをしていないが問題ない。詳しくは疑問点 4 を参照すること。
 # 疑問点
 ## 1: それぞれの群の位数は?
-実験 ([phi.log](./phi.log)) によるとおそらくすべて $8l$ と思われる。 (phi.sage, phi.log) ただし、同型ではない。 $\mathcal{E}$ は巡回群であるため位数 2 の点をちょうど 1 個持つが、 $\mathcal{J}$ は 3 個持つ。
+実験 ([phi.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/phi.log)) によるとおそらくすべて $8l$ と思われる。 (phi.sage, phi.log) ただし、同型ではない。 $\mathcal{E}$ は巡回群であるため位数 2 の点をちょうど 1 個持つが、 $\mathcal{J}$ は 3 個持つ。
 
 - $\mathcal{J} \simeq \mathbb{Z}/4 \times \mathbb{Z}/2 \times \mathbb{Z}/l$
 - $\mathcal{J}/\mathcal{J}[2] \simeq \mathbb{Z}/2 \times \mathbb{Z}/l$
