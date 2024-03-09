@@ -14,4 +14,16 @@ func main() {
 	base := new(edwards25519.ExtendedPoint).SetBase()
 	fmt.Println("base =", base.Ristretto())
 	fmt.Printf("base.y = 0x%s\n", base.Y.BigInt().Text(16))
+
+	s := new(edwards25519.ExtendedPoint).SetTorsion1()
+	fmt.Println("s1 =", s.Ristretto(), s.String())
+
+	s = new(edwards25519.ExtendedPoint).SetTorsion2()
+	fmt.Println("s2 =", s.Ristretto(), s.String())
+
+	s = new(edwards25519.ExtendedPoint).SetTorsion3()
+	fmt.Println("s3 =", s.Ristretto())
+
+	s = new(edwards25519.ExtendedPoint).SetZero()
+	fmt.Println("s0 =", s.Ristretto())
 }
