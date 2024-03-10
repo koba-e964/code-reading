@@ -1,4 +1,4 @@
-# Ristretto255 について
+# 素数位数の群を高速に実現する Ristretto255 について
 
 
 $\mathcal{E}$ を群 Edwards25519 とする。
@@ -30,8 +30,8 @@ $$\mathcal{J}: t^2 = s^4 + As^2 + 1$$
 $$\mathcal{E}: -x^2 + y^2 = 1-\frac{A-2}{A+2}x^2y^2$$
 $$\mathcal{M}: v^2 = u^3 + Au^2+ u$$
 データの表現は以下の通り。
-- 直列化表現: $\mathcal{J}/\mathcal{J}[2] \simeq \{(s,t) \in \mathcal{J} \mid s \in \mathbb{F} _ p^+, s/t \in (1/\sqrt{-(A+2)})\mathbb{F} _ p^+\} \cap \phi^{-1}(\{(x,y) \mid xy \in \mathbb{F} _ p^+\})$ (の s 座標、[参考](https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L230-L235))
-- 内部表現: $2\mathcal{E}/\mathcal{E}[4] \simeq 2\mathcal{E} \cap \{(x,y) \mid x \in \mathbb{F} _ p^+, xy \in \mathbb{F} _ p^+, x \neq 0\}$
+- 直列化表現: $\mathcal{J}/\mathcal{J}[2] \simeq \{(s,t) \in \mathcal{J} \mid s \in \mathbb{F} _ p^+, s/t \in (1/\sqrt{-(A+2)})\mathbb{F} _ p^+\} \cap \phi^{-1}(\{(x,y) \mid xy \in \mathbb{F} _ p^+, y \neq 0\})$ (の s 座標、[参考](https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L230-L235))
+- 内部表現: $2\mathcal{E}/\mathcal{E}[4] \simeq 2\mathcal{E} \cap \{(x,y) \mid x \in \mathbb{F} _ p^+, xy \in \mathbb{F} _ p^+, y \neq 0\}$
 
 ### 曲線
 #### Jacobi quartic curve
@@ -157,7 +157,8 @@ $\mathcal{J} \simeq \mathbb{Z}/4 \times \mathbb{Z}/2 \times \mathbb{Z}/l$ であ
 
 また、以下の事実および[同型定理](https://ja.wikipedia.org/wiki/%E5%90%8C%E5%9E%8B%E5%AE%9A%E7%90%86#%E5%AE%9A%E7%90%861)から $\mathcal{J}/\mathcal{J}[2]$ と $2\mathcal{E}/\mathcal{E}[2]$ が同型であること、同型が $\phi$ から誘導されることがわかる。
 - $\phi^{-1}(\mathcal{E}[2]) = \mathcal{J}[2]$ が成立する。そのため $p \circ \phi: \mathcal{J} \to 2\mathcal{E}/\mathcal{E}[2]$ の核は $\mathcal{J}[2]$ である。
-- $\phi: \mathcal{J} \to 2\mathcal{E}$ は全射である。(TODO)
+- $\phi: \mathcal{J} \to 2\mathcal{E}$ は全射である。
+  - [phi_surj.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/phi_surj.log) から、 $s = 6$ を満たす点 $P \in \mathcal{J}$ に対して $\phi(P) \in 2\mathcal{E}$ は位数が $4l$ である。 $2\mathcal{E} = \langle \phi(P) \rangle$ が成立するので、任意の $Q \in 2\mathcal{E}$ に対して対して、 $Q = k\phi(P)$ なる $k$ が存在しその $k$ を使って $Q = \phi(kP)$ と書けることから、 $\phi$ は全射。
 
 ## 3: φ と φ-hat は合成すると 2 倍写像になる。直列化はどのように行うのか?
 $\hat\phi$ を使うのではなく、 $\phi$ の逆像のうち適切なものを選ぶことで行われる。

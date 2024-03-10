@@ -1,13 +1,12 @@
 name: Testing of scripts
 
-on:
+"on":
   schedule:
     - cron: '10 12 * * 5'
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
   workflow_dispatch:
 
 jobs:
@@ -31,6 +30,10 @@ jobs:
           pylint algorithm/smart-attack/smart_attack.py --fail-under=9
           python algorithm/smart-attack/smart_attack.py test
           pylint algorithm/ecpp/binary_quad.py --fail-under=9
+
+      - name: Check scripts in general
+        run: |
+          pushd algorithm/ristretto255 && GITHUB_ACTIONS=1 ./run.sh && popd
 
       - name: Check Go files
         run: |
