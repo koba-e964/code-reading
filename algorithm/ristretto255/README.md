@@ -1,4 +1,4 @@
-# 素数位数の群を高速に実現する Ristretto255 について
+# 素数位数の群を高速に実現する Ristretto (`ristretto255`) について
 
 
 $\mathcal{E}$ を群 Edwards25519 とする。
@@ -7,8 +7,8 @@ $P \in \mathcal{E}$ を $P_y = 3$ で $P_x$ が偶数である点とする。こ
 - $\mathcal{E}$ の生成元、および本当に位数が $8l$ であることについては [prove_order.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/prove_order.log) を参照すること。
 
 $2\mathcal{E}/\mathcal{E}[4]$ は位数が素数 $l$ である。 $\mathcal{E}$ の上で計算するのはやりにくく脆弱性の原因となるので、この群の上で計算ができるようにラップするのが Ristretto [[Rist]] の役目である。ここで、記法は以下の通り。
-- $r\mathcal{E} := \{rx \mid x \in \mathcal{E}\}$
-- $\mathcal{E}[r] := \{x \in \mathcal{E} \mid rx = O\}$
+- $r\mathcal{E} := \lbrace rx \mid x \in \mathcal{E}\rbrace$
+- $\mathcal{E}[r] := \lbrace x \in \mathcal{E} \mid rx = O\rbrace$
 
 主に [[Rist]] の流れに沿ってまとめる。また数式処理のために Sage を使う。バージョンは 10.2 である。
 ```sage
@@ -20,7 +20,7 @@ sage: version()
 - 用語・記法:
   - $x \in \mathbb{F} _ p$ の **canonical な表現**とは、 $x$ の同値類の中で最小の非負整数である。つまり $0, 1, 2, \ldots, p-1$ のいずれかである。
   - $\mathbb{F} _ p$ の元が**正** (**positive**) であるとは、それが $0, 2, 4, \ldots, p-1$ のいずれかであることをいう。簡単にいうと canonical な表現を有理整数と解釈したものが偶数であること。
-  - $\mathbb{F} _ p ^ +$ で、 $\mathbb{F} _ p$ の正の元を集めた集合を表す。つまり、 $\mathbb{F} _ p^+ := \{0, 2, 4, \ldots, p-1\}$ である。
+  - $\mathbb{F} _ p ^ +$ で、 $\mathbb{F} _ p$ の正の元を集めた集合を表す。つまり、 $\mathbb{F} _ p^+ := \lbrace 0, 2, 4, \ldots, p-1\rbrace$ である。
 
 ## データ
 Curve25519 [[Ber2006]], Edwards25519 [[BDLSY2011]], ristretto255 [[Rist]] の構成で使われる曲線は以下の通り。
@@ -30,8 +30,8 @@ $$\mathcal{J}: t^2 = s^4 + As^2 + 1$$
 $$\mathcal{E}: -x^2 + y^2 = 1-\frac{A-2}{A+2}x^2y^2$$
 $$\mathcal{M}: v^2 = u^3 + Au^2+ u$$
 データの表現は以下の通り。
-- 直列化表現: $\mathcal{J}/\mathcal{J}[2] \simeq \{(s,t) \in \mathcal{J} \mid s \in \mathbb{F} _ p^+, s/t \in (1/\sqrt{-(A+2)})\mathbb{F} _ p^+\} \cap \phi^{-1}(\{(x,y) \mid xy \in \mathbb{F} _ p^+, y \neq 0\})$ (の s 座標、[参考](https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L230-L235))
-- 内部表現: $2\mathcal{E}/\mathcal{E}[4] \simeq 2\mathcal{E} \cap \{(x,y) \mid x \in \mathbb{F} _ p^+, xy \in \mathbb{F} _ p^+, y \neq 0\}$
+- 直列化表現: $\mathcal{J}/\mathcal{J}[2] \simeq \lbrace (s,t) \in \mathcal{J} \mid s \in \mathbb{F} _ p^+, s/t \in (1/\sqrt{-(A+2)})\mathbb{F} _ p^+\rbrace \cap \phi^{-1}(\lbrace (x,y) \mid xy \in \mathbb{F} _ p^+, y \neq 0\rbrace)$ (の s 座標、[参考](https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L230-L235))
+- 内部表現: $2\mathcal{E}/\mathcal{E}[4] \simeq 2\mathcal{E} \cap \lbrace (x,y) \mid x \in \mathbb{F} _ p^+, xy \in \mathbb{F} _ p^+, y \neq 0\rbrace$
 
 ### 曲線
 #### Jacobi quartic curve
@@ -62,7 +62,7 @@ $$(X_i, Y_i, Z_i) = (-X, Y, Z)$$
 
 また単位元は $(0, 1, 1)$ である。
 
-$\mathcal{J}[2] = \{(0, 1, 1), (0, -1, 1), (1, \pm 1, 0)\}$ が成立する。
+$\mathcal{J}[2] = \lbrace (0, 1, 1), (0, -1, 1), (1, \pm 1, 0)\rbrace$ が成立する。
 なお、 $(-X, Y, -Z) = (X, Y, Z)$ に注意すること。特に $(0, 1, -1) = (0, 1, 1)$ にハマりやすい。
 - $(0, 1, 1)$: 位数 1
 - $(0, -1, 1), (1, \pm 1, 0)$: 位数 2
@@ -80,7 +80,7 @@ sage: is_square(d)
 False
 ```
 
-$\mathcal{E}[4] = \{(0, 1), (0, -1), (\pm \sqrt{-1}, 0)\}$ が成立する。ここで、
+$\mathcal{E}[4] = \lbrace (0, 1), (0, -1), (\pm \sqrt{-1}, 0)\rbrace$ が成立する。ここで、
 - $\sqrt{-1}$ は $-1$ の平方根であって $\mathbb{F} _ p^+$ の元であるもの、具体的には `0x2b8324804fc1df0b2b4d00993dfbd7a72f431806ad2fe478c4ee1b274a0ea0b0` を指す。(https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/field_radix51.go#L16-L20, [encoding.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/encoding.log))
 - $(0, 1)$ は位数 1、 $(0, -1)$ は位数 2、 $(\pm \sqrt{-1}, 0)$ は位数 4 である。
 - $(x, y) + (0, 1) = (x, y)$
@@ -158,7 +158,7 @@ $\mathcal{J} \simeq \mathbb{Z}/4 \times \mathbb{Z}/2 \times \mathbb{Z}/l$ であ
 また、以下の事実および[同型定理](https://ja.wikipedia.org/wiki/%E5%90%8C%E5%9E%8B%E5%AE%9A%E7%90%86#%E5%AE%9A%E7%90%861)から $\mathcal{J}/\mathcal{J}[2]$ と $2\mathcal{E}/\mathcal{E}[2]$ が同型であること、同型が $\phi$ から誘導されることがわかる。
 - $\phi^{-1}(\mathcal{E}[2]) = \mathcal{J}[2]$ が成立する。そのため $p \circ \phi: \mathcal{J} \to 2\mathcal{E}/\mathcal{E}[2]$ の核は $\mathcal{J}[2]$ である。
 - $\phi: \mathcal{J} \to 2\mathcal{E}$ は全射である。
-  - [phi_surj.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/phi_surj.log) から、 $s = 6$ を満たす点 $P \in \mathcal{J}$ に対して $\phi(P) \in 2\mathcal{E}$ は位数が $4l$ である。 $2\mathcal{E} = \langle \phi(P) \rangle$ が成立するので、任意の $Q \in 2\mathcal{E}$ に対して対して、 $Q = k\phi(P)$ なる $k$ が存在しその $k$ を使って $Q = \phi(kP)$ と書けることから、 $\phi$ は全射。
+  - [phi_surj.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/phi_surj.log) から、 $s = 6$ を満たす点 $P \in \mathcal{J}$ に対して $\phi(P) \in 2\mathcal{E}$ は位数が $4l$ である。 $2\mathcal{E} = \langle \phi(P) \rangle$ が成立するので、任意の $Q \in 2\mathcal{E}$ に対して、 $Q = k\phi(P)$ なる $k$ が存在しその $k$ を使って $Q = \phi(kP)$ と書けることから、 $\phi$ は全射。
 
 ## 3: φ と φ-hat は合成すると 2 倍写像になる。直列化はどのように行うのか?
 $\hat\phi$ を使うのではなく、 $\phi$ の逆像のうち適切なものを選ぶことで行われる。

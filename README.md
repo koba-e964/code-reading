@@ -10,7 +10,7 @@
     - [OpenSSH における ed25519 の実装 (@V_8_8_P1)](algorithm/OpenSSH:V_8_8_P1-ed25519/)
     - [Smart-attack](algorithm/smart-attack/)
     - [乱数源 (シードフレーズなど) から鍵を導出する BIP 32](algorithm/bip32/)
-    - [素数位数の群を高速に実現する Ristretto255 について](algorithm/ristretto255/)
+    - [素数位数の群を高速に実現する Ristretto (`ristretto255`) について](algorithm/ristretto255/)
   - [Reed-Solomon 符号の実装](algorithm/reed-solomon/)
   - [素数性の証明アルゴリズム ECPP](algorithm/ecpp/)
   - [gzip, deflate フォーマットの中身](algorithm/deflate/)
