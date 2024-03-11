@@ -1,6 +1,5 @@
 # 素数位数の群を高速に実現する Ristretto (`ristretto255`) について
 
-
 $\mathcal{E}$ を群 Edwards25519 とする。
 $$-x^2 + y^2 = 1-\frac{121665}{121666}x^2y^2$$
 $P \in \mathcal{E}$ を $P_y = 3$ で $P_x$ が偶数である点とする。このとき、 $lP$ は位数が 8 である。よって $P$ は位数が $8l$ ($l$ は素数) であり、 $\mathcal{E}$ が位数 $8l$ の巡回群であることがわかる。
@@ -168,6 +167,15 @@ $\hat\phi$ を使うのではなく、 $\phi$ の逆像のうち適切なもの�
 $xy = 0$ が満たされるとき invsqrt は 0 になるため、その他の分母は軒並み 0 になる。特に den_inv も 0 であるため s も 0 である。これは $(0, 1) \in \mathcal{J}$ および $(0, 1) \in 2\mathcal{E}$ を表現するため問題ない。
 - 実装例: https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L302-L309
 - RFC の該当箇所: [[RFC9496], 4.3.2. Encode]
+
+## 5: このページの議論の適用範囲は?
+筆者にとっても謎である。以下の表は筆者がわかっている範囲を示す。
+|条件|適用可否|
+|--|--|
+|$p = 2^{255}-19, A=486662$|OK
+|$\mathcal{J}$ や $\mathcal{E}$ の位数が $8\times \mathrm{prime}$ |unknown|
+|$\mathcal{J}$ や $\mathcal{E}$ の位数が $4\times \mathrm{prime}$ |unknown|
+|$p \equiv 1 \pmod 4$ 、 $-(A+2)$ が平方剰余、 $A-2$ が平方非剰余|unknown|
 
 # 参考文献
 
