@@ -1,4 +1,4 @@
-# 楕円曲線などへのハッシュ関数 (hash_to_curve) について
+# 楕円曲線などへのハッシュ関数 (hash_to_curve) を一定時間で計算する
 [BLS12-381](https://hackmd.io/@benjaminion/bls12-381) などの曲線によって実現できるペアリングベースの暗号方式では、hash_to_curve の操作が必要になる。
 
 - 署名: $H(m) \in E_2$ をメッセージ m に対して定まる $G_2$ の点とする。このとき $\sigma = \mathrm{sk}H(m)$ とすれば $e(g_1,\sigma) = e(\mathrm{pk}, H(m))$ が成立する。
