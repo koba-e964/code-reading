@@ -5,9 +5,11 @@ toolchain go1.22.0
 use (
 	./algorithm/bip32
 
+	./algorithm/crc-tampering
+
 	./algorithm/deflate
 
 	./algorithm/go~go1.21.6-regexp
 
-    ./algorithm/ristretto255
+	./algorithm/ristretto255
 )
