@@ -29,14 +29,17 @@ func SolveLinear(A [][]byte, b []byte) ([]bool, bool) {
 		for j := col; j < 8*m; j++ {
 			if acp[i][j/8]&(1<<(j%8)) != 0 {
 				found = true
-				for k := i; k < n; k++ {
-					tmp := acp[k][j/8]>>(j%8) ^ acp[k][col/8]>>(col%8)
-					acp[k][col/8] ^= tmp << (col % 8)
-					acp[k][j/8] ^= tmp << (j % 8)
+				// swap(col, j)
+				if j != col {
+					for k := i; k < n; k++ {
+						tmp := (acp[k][j/8]>>(j%8) ^ acp[k][col/8]>>(col%8)) & 1
+						acp[k][col/8] ^= tmp << (col % 8)
+						acp[k][j/8] ^= tmp << (j % 8)
+					}
+					tmp := (bcp[j/8]>>(j%8) ^ bcp[col/8]>>(col%8)) & 1
+					bcp[col/8] ^= tmp << (col % 8)
+					bcp[j/8] ^= tmp << (j % 8)
 				}
-				tmp := bcp[j/8]>>(j%8) ^ bcp[col/8]>>(col%8)
-				bcp[col/8] ^= tmp << (col % 8)
-				bcp[j/8] ^= tmp << (j % 8)
 				break
 			}
 		}
@@ -48,11 +51,12 @@ func SolveLinear(A [][]byte, b []byte) ([]bool, bool) {
 		}
 		for j := col + 1; j < 8*m; j++ {
 			if acp[i][j/8]&(1<<(j%8)) != 0 {
+				// cols[j] ^= cols[col]
 				for k := i; k < n; k++ {
-					tmp := acp[k][col/8] >> (col % 8)
+					tmp := acp[k][col/8] >> (col % 8) & 1
 					acp[k][j/8] ^= tmp << (j % 8)
 				}
-				bcp[j/8] ^= (bcp[col/8] >> (col % 8)) << (j % 8)
+				bcp[j/8] ^= ((bcp[col/8] >> (col % 8)) & 1) << (j % 8)
 			}
 		}
 		rows = append(rows, i)
@@ -66,8 +70,10 @@ func SolveLinear(A [][]byte, b []byte) ([]bool, bool) {
 			panic("Error!")
 		}
 		x[row] = bcp[i/8]&(1<<(i%8)) != 0
-		for j := 0; j <= i/8; j++ {
-			bcp[j] ^= acp[row][j]
+		if x[row] {
+			for j := 0; j <= i/8; j++ {
+				bcp[j] ^= acp[row][j]
+			}
 		}
 	}
 	// is b all zero?
