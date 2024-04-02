@@ -93,8 +93,9 @@ modular polynomial [[KIY]] について。
 
 素数 $l$ に対する modular polynomial $\Phi_l(x, y)$ は、 $x$ および $y$ に関して $l+1$ 次の多項式である。具体的な値は [[CMP]] で計算されている。
 modular polynomial には以下の著しい性質がある。
-- $$\Phi_l(x, j(\tau)) = (x-j(l\tau)) \prod_{0 \le i < l} (x-j\left(\frac{\tau+i}{l}\right))$$
--  $\Phi_l(x, j(\tau))$ の係数は $\mathbb{Z}[j(\tau)]$ の元である。
+- 以下の等式が成立する:
+  $$\Phi_l(x, j(\tau)) = (x-j(l\tau)) \prod_{0 \le i < l} (x-j\left(\frac{\tau+i}{l}\right))$$
+-  $\Phi_l(x, y)$ の係数は有理整数なので、 $\Phi_l(x, j(\tau))$ の係数は $\mathbb{Z}[j(\tau)]$ の元である。
 
 また、 $j \neq 0, 1728$ のとき、以下の 3 つは同値であるようである。 ([[Sch1995], Prop. 6.2] など)
 - $\phi$ の特性多項式が因数分解できること ($t^2-4q$ が ${\bmod}\ l$ の平方剰余であること)
@@ -103,10 +104,10 @@ modular polynomial には以下の著しい性質がある。
 
 これらいずれか一つ (つまり全て) を満たすときには division polynomial の因子を見つけることができ、上の Schoof のアルゴリズムの ${\bmod}\ l$ の部分を高速化できる。基本的な流れは以下。
 
-1. isogenous curve? の j-不変量 j~ を求める。
-  - modular polynomial の有理根として求められる。
-2. j~ から曲線を復元する
-3. F_l を求める。 $F_l(x) = \prod_{1 \le i \le (l-1)/2} (x-\wp(i\tau_1/l))$ は有理整数の係数を持ち、 $F_l(\wp(z))$ は関数の間のある等式を満たすので、そこから係数を求める。
+1. $E$ と isogenous である曲線 $\tilde{E}$ の j-不変量 $\tilde \jmath$ を求める。
+    - $E$ の $\tau$ を $\tau$ と置くと、 $\tilde \jmath = j(l\tau) \vee \exists i\ldotp \tilde \jmath = j((\tau+i)/l)$ が成立する。これらは modular polynomial の有理根として求められる。
+2. $\tilde \jmath$ から曲線 $\tilde{E}$ を復元する。
+3. $F_l$ を求める。 $F_l(x) = \prod_{1 \le i \le (l-1)/2} (x-\wp(i\tau_1/l))$ は有理整数の係数を持ち、次数は $(l-1)/2$ であり、division polynomial の因子である。 $F_l(\wp(z))$ は関数の間のある等式を満たすので、そこから $F_l$ の係数を求める。
 
 また $j = 0, 1728$ のときには Cornacchia's algorithm が適用できるようである。([[Sch1995], Section 4])
 
@@ -119,13 +120,13 @@ $y^2 = x^3 + bx + c$ に対して、 $j = 1728 \cdot 4b^3/(4b^3+27c^2)$ であ�
 
 
 # 参考文献
-[[CMP]]: https://math.mit.edu/~drew/ClassicalModPolys.html
+[[CMP]] https://math.mit.edu/~drew/ClassicalModPolys.html
 
-[[KIY]]: 小暮淳, 伊豆哲也, and 横山和弘. "Atkin, Elkies らによる Schoof のアルゴリズム改良の実装について (数式処理における理論と応用の研究)." 数理解析研究所講究録 1038 (1998): 230-243.
+[[KIY]] 小暮淳, 伊豆哲也, and 横山和弘. "Atkin, Elkies らによる Schoof のアルゴリズム改良の実装について (数式処理における理論と応用の研究)." 数理解析研究所講究録 1038 (1998): 230-243.
 
-[[Mus2005]]: Musiker, Gregg. "Schoof's Algorithm for Counting Points on $E(\mathbb{F} _ {q})$." (2005).
+[[Mus2005]] Musiker, Gregg. "Schoof's Algorithm for Counting Points on $E(\mathbb{F} _ {q})$." (2005).
 
-[[Sch1995]]: Schoof, René. "Counting points on elliptic curves over finite fields." Journal de théorie des nombres de Bordeaux 7.1 (1995): 219-254.
+[[Sch1995]] Schoof, René. "Counting points on elliptic curves over finite fields." Journal de théorie des nombres de Bordeaux 7.1 (1995): 219-254.
 
 [CMP]: https://math.mit.edu/~drew/ClassicalModPolys.html
 
