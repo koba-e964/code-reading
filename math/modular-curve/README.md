@@ -81,7 +81,9 @@ Phi_4(j(q), j(-q)) = O(q^4)
 
 # 疑問点
 ## 1: モジュラー多項式の計算法は?
-TODO
+誰でも思いつきそうな方法として、 $j(\tau)$ と $j(N\tau)$ の q-展開を比較して係数を合わせる方法 ([[BCRS1999]] など) がある。
+
+$j(\tau)$ の q-展開が十分な長さ必要である。これは例えば https://mathoverflow.net/questions/71704/computing-the-q-series-of-the-j-invariant などで計算できる。ファイル jinv.go で実装した。
 
 ## 2: [モジュラー性定理](https://ja.wikipedia.org/wiki/%E8%B0%B7%E5%B1%B1%E2%80%93%E5%BF%97%E6%9D%91%E4%BA%88%E6%83%B3)との関連は?
 
@@ -109,6 +111,8 @@ $E$ が虚数乗法を持つとき (つまり、 $\tau$ が虚二次体 $K=\math
 TODO: わかりやすい文献
 
 # 参考文献
+[[BCRS1999]] Blake, Ian F., et al. "On the computation of modular polynomials for elliptic curves." HP Laboratories Technical Report, to appear (1999).
+
 [[BLS2012]] Bröker, Reinier, Kristin Lauter, and Andrew Sutherland. "Modular polynomials via isogeny volcanoes." Mathematics of Computation 81.278 (2012): 1201-1231.
 
 [[CMP]] https://math.mit.edu/~drew/ClassicalModPolys.html
@@ -130,3 +134,5 @@ TODO: わかりやすい文献
 [a]: https://math.mit.edu/classes/18.783/2017/LectureNotes25.pdf
 
 [DdB2011]: https://www.universiteitleiden.nl/binaries/content/assets/science/mi/scripties/dobbendebruynbach.pdf
+
+[BCRS1999]: https://www.math.uwaterloo.ca/~mrubinst/publications/phi.pdf

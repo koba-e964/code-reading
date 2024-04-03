@@ -22,6 +22,7 @@
   - [generic-array:0.14.4 (Rust)](type-system/generic-array:0.14.4/)
 - 数学
   - [フィボナッチ数の平方数は 0, 1, 144 のみ](math/SquareFibonacci/)
+  - [モジュラー曲線について](math/modular-curve/)
 
 # このリポジトリーのポリシー
 - 外部から頂いた PR はマージしない。

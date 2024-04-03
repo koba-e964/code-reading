@@ -1,6 +1,4 @@
-go 1.21.0
-
-toolchain go1.22.0
+go 1.22.1
 
 use (
 	./algorithm/bip32
@@ -12,4 +10,6 @@ use (
 	./algorithm/go~go1.21.6-regexp
 
 	./algorithm/ristretto255
+
+	./math/modular-curve
 )
