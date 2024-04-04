@@ -108,6 +108,7 @@ modular polynomial には以下の著しい性質がある。
     - $E$ の $\tau$ を $\tau$ と置くと、 $\tilde \jmath = j(l\tau) \vee \exists i\ldotp \tilde \jmath = j((\tau+i)/l)$ が成立する。これらは modular polynomial の有理根として求められる。
 2. $\tilde \jmath$ から曲線 $\tilde{E}$ を復元する。
 3. $F_l$ を求める。 $F_l(x) = \prod_{1 \le i \le (l-1)/2} (x-\wp(i\tau_1/l))$ は有理整数の係数を持ち、次数は $(l-1)/2$ であり、division polynomial の因子である。 $F_l(\wp(z))$ は関数の間のある等式を満たすので、そこから $F_l$ の係数を求める。
+    - $\zeta(z)$ を $\zeta'(z) = -\wp(z)$ かつ定数項が 0 となるように定め、 $\tilde\zeta(z)$ も $\tilde\wp(z)$ から同様に定めると、 $\sum_{|i|<l/2} \zeta(z+i\tau_1/l) = \tilde\zeta(a) - z\sum \wp(i\tau_1/l)$ などが成り立つので、そこから $F_l(\wp(z))$ の満たすべき関係式が作れる。
 
 また $j = 0, 1728$ のときには Cornacchia's algorithm が適用できるようである。([[Sch1995], Section 4])
 

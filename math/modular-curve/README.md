@@ -85,6 +85,8 @@ Phi_4(j(q), j(-q)) = O(q^4)
 
 $j(\tau)$ の q-展開が十分な長さ必要である。これは例えば https://mathoverflow.net/questions/71704/computing-the-q-series-of-the-j-invariant などで計算できる。ファイル jinv.go で実装した。
 
+よりよい手法は [[BLS2012]] などを参照されたい。
+
 ## 2: [モジュラー性定理](https://ja.wikipedia.org/wiki/%E8%B0%B7%E5%B1%B1%E2%80%93%E5%BF%97%E6%9D%91%E4%BA%88%E6%83%B3)との関連は?
 
 モジュラー性定理は、以下のような定理である。
