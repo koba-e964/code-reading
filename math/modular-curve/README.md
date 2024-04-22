@@ -112,6 +112,19 @@ $E$ が虚数乗法を持つとき (つまり、 $\tau$ が虚二次体 $K=\math
 
 TODO: わかりやすい文献
 
+## 5: 重さ 2 で level = 2 のカスプ形式は本当に存在しないのか?
+念のため、関数の制約を https://en.wikipedia.org/wiki/Modular_form からまとめておく。
+|分類|英語名|制約|
+|--|--|--|
+|モジュラー関数|modular function|上半平面上の解析的関数であって $\mathrm{SL}(2,\mathbb{Z})$ の部分群で変換したときにある性質を満たすもの。 (重みが 0 であることも要求する)|
+|モジュラー形式|modular form|上に加え $f$ が正則 (極を持たない) (重みが 0 であることは要求しない)|
+|カスプ形式|cusp form|上に加え $f(\infty) = 0$ など|
+
+https://tsujimotter.hatenablog.com/entry/introduction-to-modular-forms-2 に記載されている。
+https://math.stackexchange.com/questions/3951434/generators-of-level-2-modular-forms によると、重さ 2 で level = 2 のモジュラー形式は存在するが、カスプ形式は存在しない。
+
+注意点: level = 2 というのは、群 $\Gamma_0(2) = \{(a,b;c,d) \in \mathrm{SL}(2, \mathbb{Z}) \mid c \equiv 0 \pmod 2\}$ に関するモジュラー形式という意味である。
+
 # 参考文献
 [[BCRS1999]] Blake, Ian F., et al. "On the computation of modular polynomials for elliptic curves." HP Laboratories Technical Report, to appear (1999).
 
