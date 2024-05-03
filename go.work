@@ -1,4 +1,4 @@
-go 1.22.1
+go 1.22.2
 
 use (
 	./algorithm/bip32
@@ -8,6 +8,8 @@ use (
 	./algorithm/deflate
 
 	./algorithm/go~go1.21.6-regexp
+
+	./algorithm/hash-to-curve
 
 	./algorithm/ristretto255
 

@@ -56,7 +56,7 @@ $t \in \mathbb{F} _ {q}$ に対して点を割り当てる手順は以下であ�
     - y 座標の符号は、 $x = X_0(t)$ のとき正、 $x = X_1(t)$ のとき負になるようにとる。
 
 ### Simplified SWU with ab = 0 [[WB2019]] について
-上の Simplified SWU は、そのままだと ab = 0 である曲線、例えば $y^2 = x^3 + b$ (secp256k1 や BLS12-381) などに適用できない。
+上の Simplified SWU は、そのままだと ab = 0 である曲線、例えば $y^2 = x^3 + b$ (secp256k1 や BLS12-381 など) に適用できない。
 そこで、isogenous curve とそこからの同種写像を作って、そこから点を移すことで実現する。([[WB2019]] の Section 4)
 
 [[WB2019]] の Subsection 4.3 に詳しいパラメーターが記載されている。たとえば BLS12-381 の $E_2: y^2 = x^3 + 4(1+\sqrt{-1})$ には $y^2 = x^3 + 240\sqrt{-1}x + 1012(1+\sqrt{-1})$ がある。
@@ -77,6 +77,10 @@ https://www.johndcook.com/blog/2019/04/21/what-is-an-isogeny/ に言及があっ
 
 無限遠点に行くこともないので $(p+1)/2 \le |E| - 1$ である。Hasse の定理および位数 2 の点が存在することから $|E| \ge \max(p - 2 \sqrt{p}, 1) + 1$ であるため、 $(p+1)/2 \le \max(p - 2 \sqrt{p}, 1)$ が成立してほしい。
 これは $p \ge 18$ であれば常に成立する。
+
+## 5: 特に Elligator 2 について、写像の像によって生成される部分群は何か?
+直感的に考えると $\mathbb{Z} / 8l\mathbb{Z}$ 全体に思える。
+実験すると例えば $r = 1$ などで位数 $8l$ の点にマップされるので、それから生成される部分群が $\mathbb{Z} / 8l\mathbb{Z}$ 全体であることがわかる。
 
 # 参考文献
 [[BHKL2013]] Bernstein, Daniel J., et al. "Elligator: elliptic-curve points indistinguishable from uniform random strings." Proceedings of the 2013 ACM SIGSAC conference on Computer & communications security. 2013.
