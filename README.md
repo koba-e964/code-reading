@@ -17,9 +17,10 @@
   - [gzip, deflate フォーマットの中身](algorithm/deflate/)
 - データ構造
   - [Linked Hash Map (linked_hash_map:0.5.4)](data-structure/linked-hash-map:0.5.4/)
-- 型理論
+- 論理・型理論
   - [Java Generics are Turing Complete (2016)](type-system/java-generics-are-turing-complete/)
   - [generic-array:0.14.4 (Rust)](type-system/generic-array:0.14.4/)
+  - [直観主義命題論理の disjunction property について](type-system/int-prop-disj/)
 - 数学
   - [フィボナッチ数の平方数は 0, 1, 144 のみ](math/SquareFibonacci/)
   - [モジュラー曲線について](math/modular-curve/)
