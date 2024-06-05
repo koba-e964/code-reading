@@ -31,7 +31,14 @@
 ## 意味論
 ### Heyting 代数
 #### 定義
-略
+半順序集合 $(H, \le)$ が Heyting 代数であるとは、以下の演算を持つことをいう。
+- $\bot_H$: $\forall x \in H\ldotp \bot_H \le x$
+- $\wedge$: $\forall x \in H\ldotp x \le (a \wedge b) \Leftrightarrow (x \le a) \wedge (x \le b)$
+- $\vee$: $\forall x \in H\ldotp (a \vee b) \le x \Leftrightarrow (a \le x) \wedge (b \le x)$
+- $\to$: $\forall x \in H\ldotp x \le (a \to b) \Leftrightarrow (x \wedge a) \le b$
+
+この条件から、必然的に $\forall x \in H\ldotp x \le \top_H$ を満たす $\top_H$ が存在することに注意。 $\top_H := \bot_H \to \bot_H$ とおけば $x \le \top_H$ は $(x \wedge \bot_H) \le \bot_H$ と同値であり、つまり恒真である。
+
 
 このページの議論において、Heyting 代数として**有限なものだけを考えて問題ない**。このような性質は**有限モデル性** (finite model property) と呼ばれ、全く自明ではないがここでは証明しない。
 
@@ -40,7 +47,7 @@
 
 ### モデル
 $e: \mathrm{PVar} \to H$ を**環境** (environment) と呼び、ペア $(H, e)$ を**モデル**と呼ぶ。
-モデル $(H, e)$ および論理式 $A \in \mathrm{Fml}$ に対して、 $\mathrm{eval}_H(e, A) \in H$ を以下のように定義する:
+モデル $(H, e)$ および論理式 $A \in \mathrm{Fml}$ に対して、モデル $(H, e)$ における $A$ の**表示** (denotation) $\mathrm{eval}_H(e, A) \in H$ を以下のように定義する:
 
 - $\mathrm{eval}_H(e, \bot) := \bot_H$
 - $p \in \mathrm{PVar}$ に対して $\mathrm{eval}_H(e, p) := e(p)$
@@ -49,10 +56,13 @@ $e: \mathrm{PVar} \to H$ を**環境** (environment) と呼び、ペア $(H, e)$
   - $\mathrm{eval}_H(e, A \vee B) := \mathrm{eval}_H(e, A) \vee \mathrm{eval}_H(e, B)$
   - $\mathrm{eval}_H(e, A \to B) := \mathrm{eval}_H(e, A) \to \mathrm{eval}_H(e, B)$
 
-このように定めると、以下の定理が成立する。
-- モデル $(H_1, e)$ および Heyting 代数の準同型 $f: H_1 \to H_2$ があるとする。このとき、 $f(\mathrm{eval} _ {H _ 1}(e, A)) = \mathrm{eval} _ {H _ 2}(f \circ e, A)$ が成り立つ。
+このように定めると、以下の補題が成立する。
+#### 補題 1
+モデル $(H_1, e)$ および Heyting 代数の準同型 $f: H_1 \to H_2$ があるとする。このとき、 $f(\mathrm{eval} _ {H _ 1}(e, A)) = \mathrm{eval} _ {H _ 2}(f \circ e, A)$ が成り立つ。
 
-論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) = \top_H$ が成立する時、 $A$ は $(H, e)$ の上で**妥当** (valid) であるといい、 $(H,e)\Vdash A$ と表記する。また、論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) \neq \top_H$ が成立する時、 $(H,e)\nVdash A$ と表記し、モデル $(H, e)$ のことを $A$ の **countermodel** と呼ぶ。
+証明: 略
+
+論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) = \top_H$ が成立するとき、 $A$ は $(H, e)$ の上で**妥当** (valid) であるといい、 $(H,e)\Vdash A$ と表記する。また、論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) \neq \top_H$ が成立する時、 $(H,e)\nVdash A$ と表記し、モデル $(H, e)$ のことを $A$ の **countermodel** と呼ぶ。
 
 ### 健全性
 任意の論理式 $A$ およびモデル $(H, e)$ に対して、 $\vdash A$ であれば $(H, e) \Vdash A$ が成立する。この性質のことを直観主義命題論理の**健全性** (soundness) と呼ぶ。
@@ -69,13 +79,13 @@ https://math.stackexchange.com/questions/2000978/proof-of-the-disjunction-proper
 
 (Kripke model で $W \cup V \cup \lbrace u\rbrace$ を構成するのは、Heyting 代数だと $H_1 \times H_2 + \lbrace \top\rbrace$ を作ることに相当する。)
 
-### 補題 1
+### 補題 2
 $H$ を Heyting 代数とし、 $t_{H}: H + \lbrace \top\rbrace \to H$ を $t_H(h) := h, t_H(\top) := \top_H$ で定める。このとき $t_{H}$ は Heyting 代数の準同型である。
 
 証明: 略
 
 
-### 定理 2 (disjunction property)
+### 定理 3 (disjunction property)
 論理式 $A, B$ に対し、 $\nvdash A$ かつ $\nvdash B$ であれば、 $\nvdash A \vee B$ が成立する。
 
 証明:
@@ -85,9 +95,25 @@ $A$ の countermodel を $(H_1, e_1)$、 $B$ の countermodel を $(H_2, e_2)$ �
 
 $H := H_1 \times H_2 + \lbrace \top\rbrace$ 上の環境 $e: \mathrm{PVar} \to H_1 \times H_2 + \lbrace \top\rbrace$ を $e(p) := (e_1(p), e_2(p))$ で定める。このとき、
 $$\mathrm{eval} _ {H_1}(e_1, A) \neq \top_1, \mathrm{eval} _ {H_2}(e_2, B) \neq \top_2$$
-であり、補題 1 から $t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, X)) = \mathrm{eval} _ {H _ 1 \times H _ 2}(t _ {H _ 1\times H _ 2} \circ e, X)$ であるため、
+であり、補題 1, 2 から $t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, X)) = \mathrm{eval} _ {H _ 1 \times H _ 2}(t _ {H _ 1\times H _ 2} \circ e, X)$ であるため、
 $$t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, A)) = (\mathrm{eval} _ {H _ 1}(e _ 1, A), \mathrm{eval} _ {H _ 2}(e _ 2, A)) \ne (\top _ 1, \top _ 2)$$
 $$t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, B)) = (\mathrm{eval} _ {H _ 1}(e _ 1, B), \mathrm{eval} _ {H _ 2}(e _ 2, B)) \ne (\top _ 1, \top _ 2)$$
 から
 $$\mathrm{eval}_H(e, A) \le (\top_1, \top_2), \mathrm{eval}_H(e, B) \le (\top_1, \top_2)$$
 が言え、 $$\mathrm{eval}_H(e, A \vee B) = \mathrm{eval}_H(e, A) \vee \mathrm{eval}_H(e, B) \le (\top_1, \top_2)$$ が言える。つまり $\mathrm{eval}_H(e, A \vee B) \ne \top$ であり $(H, e)$ は $A \vee B$ の countermodel である。健全性から $\nvdash A \vee B$ である。
+
+### 適用例
+$p \in \mathrm{PVar}$ とする。 $p$ の countermodel の例は $(\lbrace0 < 1\rbrace, p \mapsto 0)$ であり、 $\neg p$ の countermodel の例は $(\lbrace0 < 1\rbrace, p \mapsto 1)$ である。
+ここから $p \vee \neg p$ の countermodel を構成しよう。
+
+定理 3 の構成だと $(H, e) = (\lbrace (0,0), (0,1), (1,0), (1,1), \top\rbrace, p \mapsto (0, 1))$ となる。
+- $\mathrm{eval}_H(e, p) = (0, 1)$
+- $\mathrm{eval}_H(e, \neg p) = (0, 1) \to (0, 0) = (1, 0)$
+- $\mathrm{eval}_H(e, p \vee \neg p) = (0, 1) \vee (1, 0) = (1, 1) < \top$
+
+よって $(H, e) \nVdash p \vee \neg p$ が成立する。よって $\nvdash p \vee \neg p$ も成立する。
+
+**注意**: 実際にはもっと小さい countermodel $(\lbrace 0 < 1 < 2\rbrace, p \mapsto 1)$ が存在する。
+
+## 参考文献
+- ipc_botの解説 決定版! [https://zenn.dev/qnighy/articles/103144250d0a9d](https://zenn.dev/qnighy/articles/103144250d0a9d)
