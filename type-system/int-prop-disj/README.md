@@ -52,7 +52,7 @@ $e: \mathrm{PVar} \to H$ を**環境** (environment) と呼び、ペア $(H, e)$
 このように定めると、以下の定理が成立する。
 - モデル $(H_1, e)$ および Heyting 代数の準同型 $f: H_1 \to H_2$ があるとする。このとき、 $f(\mathrm{eval} _ {H _ 1}(e, A)) = \mathrm{eval} _ {H _ 2}(f \circ e, A)$ が成り立つ。
 
-論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) \neq \top_H$ が成立する時、 $A$ は $(H, e)$ の上で**妥当** (valid) であるといい、 $(H,e)\Vdash A$ と表記する。また、論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) \neq \top_H$ が成立する時、 $(H,e)\nVdash A$ と表記し、モデル $(H, e)$ のことを $A$ の **countermodel** と呼ぶ。
+論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) = \top_H$ が成立する時、 $A$ は $(H, e)$ の上で**妥当** (valid) であるといい、 $(H,e)\Vdash A$ と表記する。また、論理式 $A$ とモデル $(H, e)$ に対して $\mathrm{eval}_H(e, A) \neq \top_H$ が成立する時、 $(H,e)\nVdash A$ と表記し、モデル $(H, e)$ のことを $A$ の **countermodel** と呼ぶ。
 
 ### 健全性
 任意の論理式 $A$ およびモデル $(H, e)$ に対して、 $\vdash A$ であれば $(H, e) \Vdash A$ が成立する。この性質のことを直観主義命題論理の**健全性** (soundness) と呼ぶ。
@@ -67,10 +67,10 @@ $A$ を任意の論理式とする。このとき、すべてのモデル $(H, e
 ## disjunction property の証明
 https://math.stackexchange.com/questions/2000978/proof-of-the-disjunction-property の方針で証明する。
 
-(Kripke model で $W \cup V \cup \{u\}$ を構成するのは、Heyting 代数だと $H_1 \times H_2 + \{\top\}$ を作ることに相当する。)
+(Kripke model で $W \cup V \cup \lbrace u\rbrace$ を構成するのは、Heyting 代数だと $H_1 \times H_2 + \lbrace \top\rbrace$ を作ることに相当する。)
 
 ### 補題 1
-$H$ を Heyting 代数とし、 $t_{H}: H + \{\top\} \to H$ を $t_H(h) := h, t_H(\top) := \top_H$ で定める。このとき $t_{H}$ は Heyting 代数の準同型である。
+$H$ を Heyting 代数とし、 $t_{H}: H + \lbrace \top\rbrace \to H$ を $t_H(h) := h, t_H(\top) := \top_H$ で定める。このとき $t_{H}$ は Heyting 代数の準同型である。
 
 証明: 略
 
@@ -83,7 +83,7 @@ $H$ を Heyting 代数とし、 $t_{H}: H + \{\top\} \to H$ を $t_H(h) := h, t_
 完全性から $A$ や $B$ は countermodel を持つ。
 $A$ の countermodel を $(H_1, e_1)$、 $B$ の countermodel を $(H_2, e_2)$ として、 $A \vee B$ の countermodel を構成しよう。
 
-$H := H_1 \times H_2 + \{\top\}$ 上の環境 $e: \mathrm{PVar} \to H_1 \times H_2 + \{\top\}$ を $e(p) := (e_1(p), e_2(p))$ で定める。このとき、
+$H := H_1 \times H_2 + \lbrace \top\rbrace$ 上の環境 $e: \mathrm{PVar} \to H_1 \times H_2 + \lbrace \top\rbrace$ を $e(p) := (e_1(p), e_2(p))$ で定める。このとき、
 $$\mathrm{eval} _ {H_1}(e_1, A) \neq \top_1, \mathrm{eval} _ {H_2}(e_2, B) \neq \top_2$$
 であり、補題 1 から $t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, X)) = \mathrm{eval} _ {H _ 1 \times H _ 2}(t _ {H _ 1\times H _ 2} \circ e, X)$ であるため、
 $$t _ {H _ 1\times H _ 2}(\mathrm{eval} _ H(e, A)) = (\mathrm{eval} _ {H _ 1}(e _ 1, A), \mathrm{eval} _ {H _ 2}(e _ 2, A)) \ne (\top _ 1, \top _ 2)$$
