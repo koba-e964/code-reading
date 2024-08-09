@@ -50,3 +50,7 @@ jobs:
         run: |
           cd algorithm/md5-sha1-collision
           ./run.sh
+      - name: Check NTRUPrime
+        run: |
+          cd algorithm/NTRUPrime
+          ./run.sh
