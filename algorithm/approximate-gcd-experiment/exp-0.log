@@ -1,0 +1,554 @@
+# (0.50s) num_sigs = 3
+(0.50s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(0.94s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(0.95s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(0.96s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 9337
+(0.97s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 9337
+(0.98s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 9334
+(0.99s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(1.00s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 9334
+(1.01s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 9335
+(1.02s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 9337
+(1.02s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(1.03s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 9332
+(1.04s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 9328
+(1.05s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 9329
+(1.06s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 9330
+(1.07s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 9326
+(1.08s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 9336
+(1.09s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 9336
+(1.10s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 9337
+(1.11s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 9341
+(1.12s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 9334
+(1.13s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 9333
+(1.14s) iter = 22
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(1.16s) iter = 23
+q = round(found_n / rsa.n); q.bit_length() = 9338
+(1.17s) iter = 24
+q = round(found_n / rsa.n); q.bit_length() = 9335
+(1.19s) iter = 25
+q = round(found_n / rsa.n); q.bit_length() = 9336
+(1.20s) iter = 26
+q = round(found_n / rsa.n); q.bit_length() = 9334
+success = 0
+count = 27
+# (1.21s) num_sigs = 4
+(1.21s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 5622
+(1.23s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 5630
+(1.25s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 5625
+(1.26s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.28s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 5630
+(1.30s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.32s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.33s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 5634
+(1.35s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 5626
+(1.37s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 5628
+(1.39s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 5627
+(1.40s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 5626
+(1.42s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 5628
+(1.44s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 5626
+(1.45s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 5627
+(1.47s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.49s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 5628
+(1.51s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.52s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 5625
+(1.54s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 5630
+(1.56s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.58s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 5630
+(1.59s) iter = 22
+q = round(found_n / rsa.n); q.bit_length() = 5629
+(1.61s) iter = 23
+q = round(found_n / rsa.n); q.bit_length() = 5628
+(1.63s) iter = 24
+q = round(found_n / rsa.n); q.bit_length() = 5628
+(1.65s) iter = 25
+q = round(found_n / rsa.n); q.bit_length() = 5623
+success = 0
+count = 26
+# (1.66s) num_sigs = 5
+(1.66s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 3777
+(1.69s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 3776
+(1.72s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 3771
+(1.75s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 3772
+(1.78s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(1.81s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(1.84s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 3774
+(1.87s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 3774
+(1.90s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 3769
+(1.93s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 3768
+(1.96s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(1.99s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 3776
+(2.02s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(2.05s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 3773
+(2.08s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 3769
+(2.11s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(2.14s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 3772
+(2.17s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 3774
+(2.20s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 3773
+(2.23s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 3773
+(2.26s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(2.29s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(2.31s) iter = 22
+q = round(found_n / rsa.n); q.bit_length() = 3775
+(2.34s) iter = 23
+q = round(found_n / rsa.n); q.bit_length() = 3771
+(2.37s) iter = 24
+q = round(found_n / rsa.n); q.bit_length() = 3775
+success = 0
+count = 25
+# (2.40s) num_sigs = 6
+(2.40s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 2659
+(2.45s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 2661
+(2.49s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 2660
+(2.54s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 2664
+(2.59s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 2665
+(2.63s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 2659
+(2.68s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 2664
+(2.72s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 2660
+(2.77s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 2664
+(2.82s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 2666
+(2.86s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 2662
+(2.91s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 2663
+(2.96s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 2662
+(3.00s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 2663
+(3.05s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 2664
+(3.10s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 2666
+(3.14s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 2659
+(3.19s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 2658
+(3.23s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 2662
+(3.28s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 2665
+(3.33s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 2665
+(3.38s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 2661
+(3.43s) iter = 22
+q = round(found_n / rsa.n); q.bit_length() = 2662
+(3.48s) iter = 23
+q = round(found_n / rsa.n); q.bit_length() = 2656
+success = 0
+count = 24
+# (3.52s) num_sigs = 7
+(3.52s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 1919
+(3.59s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 1921
+(3.66s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 1924
+(3.73s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 1923
+(3.79s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 1917
+(3.86s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 1923
+(3.93s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 1922
+(4.00s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 1918
+(4.07s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 1920
+(4.14s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 1916
+(4.20s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 1919
+(4.27s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 1922
+(4.34s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 1921
+(4.41s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 1920
+(4.48s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 1920
+(4.55s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 1912
+(4.62s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 1918
+(4.69s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 1919
+(4.76s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 1921
+(4.82s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 1920
+(4.89s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 1918
+(4.96s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 1921
+(5.03s) iter = 22
+q = round(found_n / rsa.n); q.bit_length() = 1920
+success = 0
+count = 23
+# (5.10s) num_sigs = 8
+(5.10s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 1392
+(5.20s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 1390
+(5.30s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(5.40s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 1390
+(5.51s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(5.61s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 1393
+(5.71s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 1392
+(5.81s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(5.91s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(6.01s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 1390
+(6.11s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 1388
+(6.21s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 1393
+(6.31s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 1393
+(6.41s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(6.51s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(6.61s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 1392
+(6.71s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 1390
+(6.81s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(6.94s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 1394
+(7.05s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 1391
+(7.15s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 1392
+(7.25s) iter = 21
+q = round(found_n / rsa.n); q.bit_length() = 1390
+success = 0
+count = 22
+# (7.35s) num_sigs = 9
+(7.35s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 1003
+(7.50s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 998
+(7.65s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 994
+(7.80s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 993
+(7.94s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 991
+(8.08s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 994
+(8.23s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 996
+(8.37s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 993
+(8.51s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 994
+(8.65s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 991
+(8.80s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 991
+(8.94s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 999
+(9.09s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 994
+(9.23s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 993
+(9.37s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 993
+(9.53s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 992
+(9.67s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 993
+(9.82s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 993
+(9.97s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 992
+(10.11s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 991
+(10.25s) iter = 20
+q = round(found_n / rsa.n); q.bit_length() = 993
+success = 0
+count = 21
+# (10.40s) num_sigs = 10
+(10.40s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 683
+(10.68s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 682
+(10.88s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 684
+(11.08s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 685
+(11.29s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 685
+(11.49s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 685
+(11.69s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 687
+(11.90s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 682
+(12.10s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 685
+(12.30s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 683
+(12.50s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 687
+(12.71s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 684
+(12.91s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 682
+(13.11s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 685
+(13.31s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 685
+(13.52s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 685
+(13.73s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 683
+(13.94s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 684
+(14.16s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 685
+(14.36s) iter = 19
+q = round(found_n / rsa.n); q.bit_length() = 683
+success = 0
+count = 20
+# (14.56s) num_sigs = 11
+(14.56s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 438
+(14.84s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 436
+(15.13s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 437
+(15.46s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 439
+(15.74s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 437
+(16.03s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 437
+(16.32s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 436
+(16.60s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 437
+(16.89s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 438
+(17.17s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 438
+(17.45s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 441
+(17.73s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 436
+(18.02s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 439
+(18.32s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 438
+(18.60s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 444
+(18.89s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 439
+(19.17s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 439
+(19.45s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 437
+(19.74s) iter = 18
+q = round(found_n / rsa.n); q.bit_length() = 439
+success = 0
+count = 19
+# (20.02s) num_sigs = 12
+(20.02s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 234
+(20.41s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 235
+(20.80s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 235
+(21.19s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 235
+(21.66s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 235
+(22.05s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 241
+(22.45s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 236
+(22.84s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 234
+(23.23s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 237
+(23.62s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 233
+(24.00s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 236
+(24.47s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 234
+(24.87s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 235
+(25.26s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 234
+(25.65s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 237
+(26.04s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 236
+(26.42s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 235
+(26.82s) iter = 17
+q = round(found_n / rsa.n); q.bit_length() = 235
+success = 0
+count = 18
+# (27.21s) num_sigs = 13
+(27.21s) iter = 0
+q = round(found_n / rsa.n); q.bit_length() = 69
+(27.74s) iter = 1
+q = round(found_n / rsa.n); q.bit_length() = 68
+(28.26s) iter = 2
+q = round(found_n / rsa.n); q.bit_length() = 72
+(28.79s) iter = 3
+q = round(found_n / rsa.n); q.bit_length() = 68
+(29.32s) iter = 4
+q = round(found_n / rsa.n); q.bit_length() = 65
+(30.09s) iter = 5
+q = round(found_n / rsa.n); q.bit_length() = 65
+(31.46s) iter = 6
+q = round(found_n / rsa.n); q.bit_length() = 65
+(32.13s) iter = 7
+q = round(found_n / rsa.n); q.bit_length() = 69
+(32.69s) iter = 8
+q = round(found_n / rsa.n); q.bit_length() = 65
+(33.25s) iter = 9
+q = round(found_n / rsa.n); q.bit_length() = 64
+(33.83s) iter = 10
+q = round(found_n / rsa.n); q.bit_length() = 68
+(34.35s) iter = 11
+q = round(found_n / rsa.n); q.bit_length() = 65
+(34.89s) iter = 12
+q = round(found_n / rsa.n); q.bit_length() = 68
+(35.47s) iter = 13
+q = round(found_n / rsa.n); q.bit_length() = 65
+(36.20s) iter = 14
+q = round(found_n / rsa.n); q.bit_length() = 66
+(36.76s) iter = 15
+q = round(found_n / rsa.n); q.bit_length() = 66
+(37.29s) iter = 16
+q = round(found_n / rsa.n); q.bit_length() = 66
+success = 0
+count = 17
+# (37.90s) num_sigs = 14
+(37.90s) iter = 0
+(38.63s) iter = 1
+(39.42s) iter = 2
+(40.17s) iter = 3
+(40.89s) iter = 4
+(41.61s) iter = 5
+(42.35s) iter = 6
+(43.08s) iter = 7
+(43.81s) iter = 8
+(44.54s) iter = 9
+(45.27s) iter = 10
+(45.99s) iter = 11
+(46.73s) iter = 12
+(47.47s) iter = 13
+(48.20s) iter = 14
+(48.92s) iter = 15
+success = 16
+count = 16
+# (49.64s) num_sigs = 15
+(49.64s) iter = 0
+(50.59s) iter = 1
+(51.54s) iter = 2
+(52.51s) iter = 3
+(53.49s) iter = 4
+(54.46s) iter = 5
+(55.42s) iter = 6
+(56.38s) iter = 7
+(57.35s) iter = 8
+(58.29s) iter = 9
+(59.25s) iter = 10
+(60.21s) iter = 11
+(61.17s) iter = 12
+(62.12s) iter = 13
+(63.09s) iter = 14
+success = 15
+count = 15
