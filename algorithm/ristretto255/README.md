@@ -23,11 +23,13 @@ sage: version()
 
 ## データ
 Curve25519 [[Ber2006]], Edwards25519 [[BDLSY2011]], ristretto255 [[Rist]] の構成で使われる曲線は以下の通り。
-$$p = 2^{255}-19$$
-$$A = 486662$$
-$$\mathcal{J}: t^2 = s^4 + As^2 + 1$$
-$$\mathcal{E}: -x^2 + y^2 = 1-\frac{A-2}{A+2}x^2y^2$$
-$$\mathcal{M}: v^2 = u^3 + Au^2+ u$$
+
+- $p = 2^{255}-19$
+- $A = 486662$
+- $\mathcal{J}: t^2 = s^4 + As^2 + 1$
+- $\mathcal{E}: -x^2 + y^2 = 1-\frac{A-2}{A+2}x^2y^2$
+- $\mathcal{M}: v^2 = u^3 + Au^2+ u$
+
 データの表現は以下の通り。
 - 直列化表現: $\mathcal{J}/\mathcal{J}[2] \simeq \lbrace (s,t) \in \mathcal{J} \mid s \in \mathbb{F} _ p^+, s/t \in (1/\sqrt{-(A+2)})\mathbb{F} _ p^+\rbrace \cap \phi^{-1}(\lbrace (x,y) \mid xy \in \mathbb{F} _ p^+, y \neq 0\rbrace)$ (の s 座標、[参考](https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L230-L235))
 - 内部表現: $2\mathcal{E}/\mathcal{E}[4] \simeq 2\mathcal{E} \cap \lbrace (x,y) \mid x \in \mathbb{F} _ p^+, xy \in \mathbb{F} _ p^+, y \neq 0\rbrace$
@@ -39,24 +41,32 @@ $$\mathcal{M}: v^2 = u^3 + Au^2+ u$$
 $t^2 = s^4 + As^2 + 1$ という方程式で表せる曲線を **Jacobi quartic curve** と呼ぶ。この曲線は 2 個の無限遠点 $(\infty, \pm \infty)$ を含む。
 
 加法公式は以下の通り。
+
 $$s_3 = \frac{s_1t_2 + s_2t_1}{1-(s_1s_2)^2}$$
+
 $$t_3 = \frac{(1 + (s_1s_2)^2)(t_1t_2 + As_1s_2) + 2s_1s_2(s_1^2+s_2^2)}{(1-(s_1s_2)^2)^2}$$
 
 逆元は以下の通り。
+
 $$(s_i, t_i) = (-s, t)$$
 
 また単位元は $(0, 1)$ である。
 
 $\mathcal{J}[2]$ の要素および Jacobi quartic における無限遠点の扱いについて、以下のような projective coordinate で扱うと分かりやすい。
+
 $$Y^2 = X^4 + AX^2Z^2 + Z^4, (s, t) = (X/Z, Y/Z^2),\\
 (X, Y, Z) = (aX, a^2Y, aZ), (X, Y, Z) \ne (0, 0, 0)$$
 
 加法公式は以下の通り。
+
 $$X_3 = X_1Y_2Z_2 + X_2Y_1Z_1$$
-$$Y_3 = ((Z_1Z_2)^2 + (X_1X_2)^2)(Y_1Y_2 + AX_1X_2Z_1Z_2) \\+ 2X_1X_2Z_1Z_2(X_1^2Z_2^2+X_2^2Z_1^2)$$
+
+$$Y_3 = ((Z_1Z_2)^2 + (X_1X_2)^2)(Y_1Y_2 + AX_1X_2Z_1Z_2) \\\\ + 2X_1X_2Z_1Z_2(X_1^2Z_2^2+X_2^2Z_1^2)$$
+
 $$Z_3 = (Z_1Z_2)^2 - (X_1X_2)^2$$
 
 逆元は以下の通り。
+
 $$(X_i, Y_i, Z_i) = (-X, Y, Z)$$
 
 また単位元は $(0, 1, 1)$ である。
@@ -135,12 +145,12 @@ $2\mathcal{E}/\mathcal{E}[4]$ の元 $(x, y)$ を 32 バイトのデータに変
   - 実装: https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L302-L309
 2. $x \not \in \mathbb{F} _ p^+ \vee y = -1$ が成り立っていたら、 $(0, -1)$ を足す。つまり $(x,y)$ を $(-x, -y)$ にする。
   - 実装: https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L311-L314
-3. $s = \pm\sqrt{(1-y)/(1+y)}$ として、$s \in \mathbb{F} _ p^+$ なる方を取る。
+3. $s = \pm\sqrt{(1-y)/(1+y)}$ として、 $s \in \mathbb{F} _ p^+$ なる方を取る。
   - 実装: https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L316-L321
 4. $s$ の canonical な表現をリトルエンディアンで表現し、32 バイトの列を得る。
   - 実装: https://github.com/bwesterb/go-ristretto/blob/v1.2.3/edwards25519/curve.go#L323
 
-[^rotate]: 実装では $y = 0$ かどうかのテストをしていないが問題ない。詳しくは疑問点 4 を参照すること。
+[^rotate]: 実装では y = 0 かどうかのテストをしていないが問題ない。詳しくは疑問点 4 を参照すること。
 # 疑問点
 ## 1: それぞれの群の位数は?
 実験 ([phi.log](/koba-e964/code-reading/tree/master/algorithm/ristretto255/phi.log)) によるとおそらくすべて $8l$ と思われる。 (phi.sage, phi.log) ただし、同型ではない。 $\mathcal{E}$ は巡回群であるため位数 2 の点をちょうど 1 個持つが、 $\mathcal{J}$ は 3 個持つ。
