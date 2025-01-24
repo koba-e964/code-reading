@@ -13,7 +13,7 @@ sage: version()
 
 例えば $K = \mathbb{Q}(\sqrt{5})$ とすると、 $(1+\sqrt{5})/2$ は $x^2-x-1$ の根であるため、 $\mathbb{Z}_K$ の要素である。 (つまり $\mathbb{Z}_K \neq \mathbb{Z}[\sqrt{5}]$)
 
-体が与えられた時それの整数環を決定する (有限生成アーベル群としての生成元を求める) のは一般には自明ではない [[K2004]]。
+体が与えられた時それの整数環を決定する (有限生成アーベル群としての生成元を求める) のは一般には自明ではない [[Kid2004]]。
 
 ### 整環 (オーダー)
 **整環** (**オーダー**, *order*) とは簡単には ($\mathbb{Z}$ を含む) 代数体の整数環の指数有限の部分群のこと。例えば体 $\mathbb{Q}(i)$ に対する環 $\mathbb{Z}[i] = \mathbb{Z}_{\mathbb{Q}(i)}$ や $\mathbb{Z}[3i]$ は整環だが、 $\mathbb{Z}$ などはそうではない。
@@ -103,6 +103,8 @@ $ sage csidh.sage
 8 Elliptic Curve defined by y^2 = x^3 + 11*x^2 + x over Finite Field of size 83
 ```
 
+# 量子計算機による攻撃
+Grover's algorithm を使って $O(\sqrt[6]{p})$-time。
 ## 疑問点
 ### 1
 有限体上の楕円曲線は常に Montgomery 曲線として表せる (同型な Montgomery 曲線が存在する) のか?
@@ -119,11 +121,23 @@ $ sage csidh.sage
 
 - $y^2 = x^3 + Ax^2 + x$ を楕円曲線の式としたとき、 $(A^2-4) \bmod p$ は平方非剰余である。
 
+### 2
+量子計算機による攻撃に対して、どの程度の計算量を要求すればいいのか?
+
+### 3
+claw finding から Grover への帰着は?
+
+多分無理。少なくとも [[Tan2008]] ではやっていない。
+
 # 参考文献
 [[CLMPR2018]] Castryck, Wouter, et al. "CSIDH: an efficient post-quantum commutative group action." Advances in Cryptology–ASIACRYPT 2018: 24th International Conference on the Theory and Application of Cryptology and Information Security, Brisbane, QLD, Australia, December 2–6, 2018, Proceedings, Part III 24. Springer International Publishing, 2018.
 
-[[K2004]] 木田 祐司. "代数体の整数基底と素数の素イデアル分解." 2004.
+[[Kid2004]] 木田 祐司. "代数体の整数基底と素数の素イデアル分解." 2004.
 
 [CLMPR2018]: https://csidh.isogeny.org/csidh-20181118.pdf
 
-[K2004]: https://web.archive.org/web/20130228161813/http://www.rkmath.rikkyo.ac.jp/~kida/intbasis.pdf
+[JF2011]: https://eprint.iacr.org/archive/2011/506/20110918:024142
+
+[Kid2004]: https://web.archive.org/web/20130228161813/http://www.rkmath.rikkyo.ac.jp/~kida/intbasis.pdf
+
+[Tan2008]: https://arxiv.org/abs/0708.2584
