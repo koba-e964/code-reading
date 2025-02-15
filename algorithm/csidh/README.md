@@ -138,6 +138,6 @@ claw finding から Grover への帰着は?
 
 [JF2011]: https://eprint.iacr.org/archive/2011/506/20110918:024142
 
-[Kid2004]: https://web.archive.org/web/20130228161813/http://www.rkmath.rikkyo.ac.jp/~kida/intbasis.pdf
+[Kid2004]: https://web.archive.org/web/20130228161813/http:%2F%2Fwww.rkmath.rikkyo.ac.jp/~kida/intbasis.pdf
 
 [Tan2008]: https://arxiv.org/abs/0708.2584
