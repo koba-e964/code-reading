@@ -29,5 +29,15 @@ reason = """
 This URL seems to sometimes return 403 to requests from GitHub Actions' runners,
 and the issue cannot be handled with retries."""
 considered_alternatives = [
-    "https://core.ac.uk/download/pdf/82407901.pdf" # TODO: check the existence of (principal => splitting)
+    "https://core.ac.uk/download/pdf/82407901.pdf", # TODO: check the existence of (principal => splitting)
+]
+
+[[ignores]]
+url = "https://www.universiteitleiden.nl/binaries/content/assets/science/mi/scripties/dobbendebruynbach.pdf"
+codes = [404]
+reason = """
+This page has gone 404. (2025-02-27)
+"""
+considered_alternatives = [
+    "https://web.archive.org/web/20240525113801/https:%2F%2Fwww.universiteitleiden.nl/binaries/content/assets/science/mi/scripties/dobbendebruynbach.pdf", # If 404 persists, switch to this page.
 ]
