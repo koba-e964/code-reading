@@ -76,7 +76,7 @@ func (l *Laurent) SetInt(x *big.Int, prec int) *Laurent {
 		panic("negative precision")
 	}
 	coef := make([]*big.Int, prec)
-	coef[0] = x
+	coef[0] = new(big.Int).Set(x)
 	for i := 1; i < prec; i++ {
 		coef[i] = new(big.Int)
 	}
@@ -108,7 +108,7 @@ func (l *Laurent) Shl(x *Laurent, n int) *Laurent {
 func (l *Laurent) Mul(x, y *Laurent) *Laurent {
 	prec := min(x.prec, y.prec)
 	coef := make([]*big.Int, prec)
-	for i := 0; i < prec; i++ {
+	for i := range prec {
 		coef[i] = new(big.Int)
 		for j := max(0, i-y.prec+1); j <= min(i, x.prec-1); j++ {
 			var tmp big.Int
@@ -118,6 +118,17 @@ func (l *Laurent) Mul(x, y *Laurent) *Laurent {
 	}
 	l.val = x.val + y.val
 	l.prec = prec
+	l.coef = coef
+	return l
+}
+
+func (l *Laurent) MulScalar(x *Laurent, y *big.Int) *Laurent {
+	coef := make([]*big.Int, x.prec)
+	for i := range x.prec {
+		coef[i] = new(big.Int).Mul(x.coef[i], y)
+	}
+	l.val = x.val
+	l.prec = x.prec
 	l.coef = coef
 	return l
 }
@@ -167,17 +178,97 @@ func (l *Laurent) Set(x *Laurent) *Laurent {
 	l.val = x.val
 	l.prec = x.prec
 	l.coef = make([]*big.Int, x.prec)
-	copy(l.coef, x.coef)
+	for i := range x.prec {
+		l.coef[i] = new(big.Int).Set(x.coef[i])
+	}
 	return l
 }
 
 // Val returns the valuation of the Laurent series.
-func (l *Laurent) Val() int {
-	return l.val
+func (l *Laurent) Val() (val int, isZero bool) {
+	allZero := true
+	minNonZero := -1
+	for i, v := range l.coef {
+		if v.Cmp(big.NewInt(0)) != 0 {
+			allZero = false
+			minNonZero = i
+			break
+		}
+	}
+	if allZero {
+		return 0, true
+	}
+	return l.val + minNonZero, false
+}
+
+// Add returns the sum of two Laurent series.
+func (l *Laurent) Add(x, y *Laurent) *Laurent {
+	xVal, xIsZero := x.Val()
+	if xIsZero {
+		return l.Set(y)
+	}
+	yVal, yIsZero := y.Val()
+	if yIsZero {
+		return l.Set(x)
+	}
+	if xVal > yVal {
+		x, y = y, x
+		xVal, yVal = yVal, xVal
+	}
+	prec := min(x.prec, y.prec+yVal-xVal)
+	coef := make([]*big.Int, prec)
+	for i := 0; i < prec; i++ {
+		coef[i] = new(big.Int).Add(x.Coef(i+xVal), y.Coef(i+xVal))
+	}
+	l.val = xVal
+	l.prec = prec
+	l.coef = coef
+	return l
+}
+
+// Sub returns the difference of two Laurent series.
+func (l *Laurent) Sub(x, y *Laurent) *Laurent {
+	tmp := new(Laurent).MulScalar(y, big.NewInt(-1))
+	return l.Add(x, tmp)
 }
 
 func (l *Laurent) Prec() int {
-	return l.prec
+	allZero := true
+	minNonZero := -1
+	for i, v := range l.coef {
+		if v.Cmp(big.NewInt(0)) != 0 {
+			allZero = false
+			minNonZero = i
+			break
+		}
+	}
+	if allZero {
+		return 0
+	}
+	return l.prec - minNonZero
+}
+
+func (l *Laurent) Shrink(x *Laurent) *Laurent {
+	val, isZero := x.Val()
+	if isZero {
+		prec := x.prec + x.val
+		l.val = 0
+		l.prec = prec
+		l.coef = make([]*big.Int, prec)
+		for i := range prec {
+			l.coef[i] = new(big.Int)
+		}
+		return l
+	}
+	prec := x.prec - (val - x.val)
+	coef := make([]*big.Int, prec)
+	for i := range prec {
+		coef[i] = new(big.Int).Set(x.coef[i+val-x.val])
+	}
+	l.val = val
+	l.prec = prec
+	l.coef = coef
+	return l
 }
 
 func (l *Laurent) Coef(i int) *big.Int {
@@ -185,4 +276,19 @@ func (l *Laurent) Coef(i int) *big.Int {
 		return new(big.Int)
 	}
 	return new(big.Int).Set(l.coef[i-l.val])
+}
+
+func (l *Laurent) V(x *Laurent, v int) *Laurent {
+	newCoef := make([]*big.Int, x.prec*v)
+	newVal := x.val * v
+	for i := range newCoef {
+		newCoef[i] = new(big.Int)
+	}
+	for i := range x.prec {
+		newCoef[i*v].Set(x.coef[i])
+	}
+	l.coef = newCoef
+	l.val = newVal
+	l.prec = len(newCoef)
+	return l
 }
