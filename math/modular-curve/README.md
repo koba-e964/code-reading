@@ -81,9 +81,15 @@ Phi_4(j(q), j(-q)) = O(q^4)
 
 # 疑問点
 ## 1: モジュラー多項式の計算法は?
-誰でも思いつきそうな方法として、 $j(\tau)$ と $j(N\tau)$ の q-展開を比較して係数を合わせる方法 ([[BCRS1999]] など) がある。
+誰でも思いつきそうな方法として、 $j(\tau)$ と $j(N\tau)$ の q-展開を比較して係数を合わせる方法がある。これは N が素数の時にうまくいくが、そうでないときはうまくいかない。
 
 $j(\tau)$ の q-展開が十分な長さ必要である。これは例えば https://mathoverflow.net/questions/71704/computing-the-q-series-of-the-j-invariant などで計算できる。ファイル jinv.go で実装した。
+
+さらによい愚直な方法は、 $\Phi_N(j(N\tau), j(\tau)) = 0$ などを使用することである ([[BCRS1999]] など) 
+
+$$\Phi_N(X, j(\tau)) = (X - j(N\tau))\prod_{k=0}^{N-1}\left(X - j\left(\frac{\tau+k}{N}\right)\right)\cdots$$
+
+なのだが、これは $\mathbb{Z}[j(\tau)]$ 係数多項式なので、q-展開の低次の項から係数合わせすればよい。
 
 よりよい手法は [[BLS2012]] などを参照されたい。
 
