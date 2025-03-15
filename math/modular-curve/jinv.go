@@ -30,7 +30,7 @@ func karatsuba(a, b []*XInt, degree, prec int) []*XInt {
 	if len(a) <= NAIVE_MUL_THRESHOLD || len(b) <= NAIVE_MUL_THRESHOLD {
 		return naiveMul(a, b, degree, prec)
 	}
-	n := max(len(a), len(b))
+	n := min(prec, max(len(a), len(b)))
 	n = (n + 1) / 2 * 2
 	m := n / 2
 	prec = min(prec, 2*n-1)
@@ -62,7 +62,7 @@ func karatsuba(a, b []*XInt, degree, prec int) []*XInt {
 		z1[i].Sub(z1[i], z0[i])
 		z1[i].Sub(z1[i], z2[i])
 	}
-	z := make([]*XInt, 2*n-1)
+	z := make([]*XInt, prec)
 	for i := range z {
 		z[i] = new(XInt).SetInt(big.NewInt(0), degree)
 	}
@@ -70,6 +70,9 @@ func karatsuba(a, b []*XInt, degree, prec int) []*XInt {
 		z[i].Add(z[i], z0[i])
 	}
 	for i := range z1 {
+		if i+m >= len(z) {
+			break
+		}
 		z[i+m].Add(z[i+m], z1[i])
 	}
 	for i := range z2 {
@@ -78,7 +81,7 @@ func karatsuba(a, b []*XInt, degree, prec int) []*XInt {
 		}
 		z[i+2*m].Add(z[i+2*m], z2[i])
 	}
-	return z[:prec]
+	return z
 }
 
 type Laurent struct {
