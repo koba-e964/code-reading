@@ -13,7 +13,7 @@ func main() {
 	delta := new(Laurent).JInv(20 - 1)
 	val, _ := delta.Val()
 	for i := val; i < val+delta.Prec(); i++ {
-		fmt.Printf("%d => %v\n", i, delta.Coef(i))
+		fmt.Printf("%d => %v\n", i, delta.Coef(i).Coef(0))
 	}
 	degrees := []int{2, 3, 5, 7, 11, 13, 17, 19}
 	for _, degree := range degrees {

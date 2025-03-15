@@ -43,6 +43,8 @@ func ModularBrute(n int) []Entry {
 	if n <= 1 {
 		panic("n > 1 should hold")
 	}
+	one := new(XInt).SetInt(big.NewInt(1), 1)
+
 	entries := make([]Entry, 0)
 	psi := Psi(n)
 	globalPrec := psi*n + 1
@@ -58,13 +60,16 @@ func ModularBrute(n int) []Entry {
 	jjnPow := new(Laurent).Pow(jjn, n)
 	tmp := new(Laurent).Add(jPow, jnPow)
 	if psi == 1+n {
-		tmp.SetInt(big.NewInt(1), globalPrec)
+		tmp.SetInt(one, globalPrec)
 	}
 	tmp.Mul(tmp, jjnPow)
 	dat.Sub(dat, tmp)
 	entries = append(entries, Entry{XDeg: psi - 1, YDeg: n, Coef: big.NewInt(-1)})
 
 	for {
+		for _, r := range entries {
+			fmt.Printf("%d %d %v\n", r.XDeg, r.YDeg, r.Coef)
+		}
 		val, isZero := dat.Val()
 		if val > 0 || isZero {
 			break
@@ -75,12 +80,12 @@ func ModularBrute(n int) []Entry {
 		jnPow.Pow(jn, a-b)
 		tmp.Add(jPow, jnPow)
 		if a == b {
-			tmp.SetInt(big.NewInt(1), globalPrec)
+			tmp.SetInt(one, globalPrec)
 		}
 		tmp.Mul(tmp, jjnPow)
 		coef := dat.Coef(val)
 		coef.Neg(coef)
-		entries = append(entries, Entry{XDeg: a, YDeg: b, Coef: coef})
+		entries = append(entries, Entry{XDeg: a, YDeg: b, Coef: coef.Coef(0)})
 		tmp.MulScalar(tmp, coef)
 		dat.Add(dat, tmp)
 	}
