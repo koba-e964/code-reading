@@ -41,3 +41,13 @@ This page has gone 404. (2025-02-27)
 considered_alternatives = [
     "https://web.archive.org/web/20240525113801/https:%2F%2Fwww.universiteitleiden.nl/binaries/content/assets/science/mi/scripties/dobbendebruynbach.pdf", # If 404 persists, switch to this page.
 ]
+
+[[ignores]]
+url = "https://dl.acm.org/doi/pdf/10.1145/2508859.2516734"
+codes = [403]
+reason = """
+This page sometimes returns 403.
+"""
+considered_alternatives = [
+    "",
+]
