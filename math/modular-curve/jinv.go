@@ -124,7 +124,7 @@ func (l *Laurent) Mul(x, y *Laurent) *Laurent {
 	prec := min(x.prec, y.prec)
 	coef := make([]*XInt, prec)
 	if x.degree != y.degree {
-		panic(fmt.Sprint("Laurent.Mul: different degrees", x.degree, y.degree))
+		panic(fmt.Sprint("Laurent.Mul: different degrees: ", x.degree, y.degree))
 	}
 	degree := x.degree
 	for i := range prec {
@@ -274,6 +274,41 @@ func (l *Laurent) Sub(x, y *Laurent) *Laurent {
 	return l.Add(x, tmp)
 }
 
+// MulShift returns `x(yq)“.
+func (l *Laurent) MulShift(x *Laurent, y, yInv *XInt) *Laurent {
+	if y.Degree() != yInv.Degree() {
+		panic("degree mismatch")
+	}
+	mul := new(XInt).Mul(y, yInv)
+	if !mul.Eq(new(XInt).SetInt(big.NewInt(1), y.Degree())) {
+		panic(fmt.Sprint("y * yInv != 1: ", y, yInv, mul))
+	}
+	val := x.val
+	degree := x.degree
+	prec := x.prec
+	coef := make([]*XInt, prec)
+	cur := new(XInt).SetInt(big.NewInt(1), degree)
+	for i := -1; i >= val; i-- {
+		cur.Mul(cur, yInv)
+		if i-val < prec {
+			coef[i-val] = new(XInt).Mul(x.coef[i-val], cur)
+		}
+	}
+	cur.SetInt(big.NewInt(1), degree)
+	for i := range val + prec {
+		if i >= val {
+			coef[i-val] = new(XInt).Mul(x.coef[i-val], cur)
+		}
+		cur.Mul(cur, y)
+	}
+	l.val = x.val
+	l.prec = prec
+	l.coef = coef
+	l.degree = degree
+	l.assertValid()
+	return l
+}
+
 func (l *Laurent) Prec() int {
 	allZero := true
 	minNonZero := -1
@@ -326,6 +361,11 @@ func (l *Laurent) Coef(i int) *XInt {
 	return new(XInt).Set(l.coef[i-l.val])
 }
 
+func (l *Laurent) Degree() int {
+	return l.degree
+}
+
+// V returns x(q^v).
 func (l *Laurent) V(x *Laurent, v int) *Laurent {
 	degree := x.degree
 	newCoef := make([]*XInt, x.prec*v)
@@ -344,6 +384,50 @@ func (l *Laurent) V(x *Laurent, v int) *Laurent {
 	return l
 }
 
+func quo(a, b int) int {
+	r := (a%b + b) % b
+	return (a - r) / b
+}
+
+func (l *Laurent) InvV(x *Laurent, v int) *Laurent {
+	degree := x.degree
+	zero := new(XInt).SetInt(big.NewInt(0), degree)
+	newVal := quo(x.val+v-1, v)
+	newPrec := quo(x.val+x.prec+v-1, v) - newVal
+	newCoef := make([]*XInt, newPrec)
+	for i := range newCoef {
+		newCoef[i] = new(XInt).SetInt(big.NewInt(0), degree)
+	}
+	for i := x.val; i < x.val+x.prec; i++ {
+		if i%v != 0 {
+			if !x.Coef(i).Eq(zero) {
+				panic(fmt.Sprint("non-zero coefficient at ", i))
+			}
+		} else {
+			newCoef[(i-x.val)/v] = new(XInt).Set(x.Coef(i))
+		}
+	}
+	l.coef = newCoef
+	l.val = newVal
+	l.prec = len(newCoef)
+	l.degree = degree
+	l.assertValid()
+	return l
+}
+
+func (l *Laurent) Resize(x *Laurent, newDegree int) *Laurent {
+	coef := make([]*XInt, x.prec)
+	for i := range x.prec {
+		coef[i] = new(XInt).Resize(x.coef[i], newDegree)
+	}
+	l.val = x.val
+	l.prec = x.prec
+	l.coef = coef
+	l.degree = newDegree
+	l.assertValid()
+	return l
+}
+
 func (l *Laurent) assertValid() {
 	degree := l.degree
 	for i := range l.prec {
@@ -351,4 +435,12 @@ func (l *Laurent) assertValid() {
 			panic(fmt.Sprintf("invalid degree: %d", l.coef[i].Degree()))
 		}
 	}
+}
+
+func (l *Laurent) String() string {
+	var s string
+	for i := l.val; i < l.val+l.prec; i++ {
+		s += fmt.Sprintf("%d => %v\n", i, l.Coef(i).String())
+	}
+	return s
 }

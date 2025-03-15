@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"slices"
 	"time"
 )
 
@@ -37,7 +36,6 @@ func main() {
 				Coef: coef.Coef.String(),
 			}
 		}
-		slices.Reverse(entries)
 		output := Output{
 			Entries: entries,
 			TimeMs:  elapsed.Milliseconds(),
@@ -51,5 +49,4 @@ func main() {
 		os.WriteFile(filename, jsonString, 0o644)
 		log.Println("wrote", filename)
 	}
-
 }
