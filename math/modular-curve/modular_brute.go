@@ -32,21 +32,18 @@ func Psi(n int) int {
 	return psi
 }
 
-func polyMul(a, b []*Laurent) []*Laurent {
-	if a[0].Degree() != b[0].Degree() {
-		panic(fmt.Sprint("polyMul: different degrees", a[0].Degree(), b[0].Degree()))
+func polyMulXPlusB(a []*Laurent, b *Laurent) []*Laurent {
+	if a[0].Degree() != b.Degree() {
+		panic(fmt.Sprint("polyMul: different degrees", a[0].Degree(), b.Degree()))
 	}
-	degree := a[0].Degree()
-	prec := a[0].Prec()
-	nTerms := len(a) + len(b) - 1
+	nTerms := len(a) + 1
 	prod := make([]*Laurent, nTerms)
-	for i := range prod {
-		prod[i] = new(Laurent).SetInt(new(XInt).SetInt(big.NewInt(0), degree), prec)
-	}
 	for i := range a {
-		for j := range b {
-			prod[i+j].Add(prod[i+j], new(Laurent).Mul(a[i], b[j]))
-		}
+		prod[i+1] = new(Laurent).Set(a[i])
+	}
+	prod[0] = new(Laurent).SetInt(new(XInt).SetInt(big.NewInt(0), b.Degree()), b.Prec())
+	for i := range a {
+		prod[i].Add(prod[i], new(Laurent).Mul(a[i], b))
 	}
 	return prod
 }
@@ -80,6 +77,8 @@ func recoverAsJsPolynomial(l, j *Laurent, lowerBound int) []*big.Int {
 	return coefs
 }
 
+// works only for prime n
+// TODO: support non-prime n
 func ModularBrute(n int) []Entry {
 	if n <= 1 {
 		panic("n > 1 should hold")
@@ -92,14 +91,12 @@ func ModularBrute(n int) []Entry {
 
 	entries := make([]Entry, 0)
 	psi := Psi(n)
-	globalPrec := psi*n*2 + 1
+	globalPrec := psi*n + 1
 	jRaw := new(Laurent).JInv(globalPrec)
 
 	// j(q)
 	j := new(Laurent).V(jRaw, n)
 	j.Resize(j, degree)
-	// j(q^n)
-	jn := new(Laurent).V(jRaw, n)
 	// j(q^{1/n}w^i)
 	jfrac := make([]*Laurent, n)
 	wPow := new(XInt).Set(one)
@@ -112,17 +109,18 @@ func ModularBrute(n int) []Entry {
 	}
 	mul := []*Laurent{new(Laurent).SetInt(one, globalPrec)}
 	for i := range jfrac {
-		tmp := []*Laurent{jfrac[i].MulScalar(jfrac[i], minusOne), new(Laurent).SetInt(one, globalPrec)}
-		mul = polyMul(mul, tmp)
+		mul = polyMulXPlusB(mul, jfrac[i].MulScalar(jfrac[i], minusOne))
 	}
 	for _, r := range mul {
 		r.Resize(r, 1)
 		r.InvV(r, n)
 	}
-	tmp := []*Laurent{jn.MulScalar(jn, new(XInt).SetInt(big.NewInt(-1), 1)), new(Laurent).SetInt(new(XInt).SetInt(big.NewInt(1), 1), globalPrec)}
-	mul = polyMul(mul, tmp)
+	jRaw.TruncatePrec(jRaw, psi+1)
+	// j(q^n)
+	jn := new(Laurent).V(jRaw, n)
+	mul = polyMulXPlusB(mul, jn.MulScalar(jn, new(XInt).SetInt(big.NewInt(-1), 1)))
 	for i, r := range mul {
-		coefs := recoverAsJsPolynomial(r, jRaw, 0)
+		coefs := recoverAsJsPolynomial(r, jRaw, i)
 		for j := range coefs {
 			if i <= j && coefs[j].Sign() != 0 {
 				entries = append(entries, Entry{

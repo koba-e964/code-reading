@@ -327,7 +327,7 @@ func (l *Laurent) Prec() int {
 	return l.prec - minNonZero
 }
 
-func (l *Laurent) Shrink(x *Laurent) *Laurent {
+func (l *Laurent) ShrinkToNormalForm(x *Laurent) *Laurent {
 	val, isZero := x.Val()
 	degree := x.degree
 	if isZero {
@@ -351,6 +351,23 @@ func (l *Laurent) Shrink(x *Laurent) *Laurent {
 	l.degree = degree
 	l.assertValid()
 	return l
+}
+
+func (l *Laurent) TruncatePrec(x *Laurent, newPrec int) int {
+	if newPrec > x.prec {
+		panic(fmt.Sprint("newPrec > x.prec: ", newPrec, x.prec))
+	}
+	degree := x.degree
+	coef := make([]*XInt, newPrec)
+	for i := range newPrec {
+		coef[i] = new(XInt).Set(x.coef[i])
+	}
+	l.val = x.val
+	l.prec = newPrec
+	l.coef = coef
+	l.degree = degree
+	l.assertValid()
+	return newPrec
 }
 
 func (l *Laurent) Coef(i int) *XInt {

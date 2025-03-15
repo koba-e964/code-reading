@@ -197,7 +197,7 @@ func (x *XInt) Mul(x1, x2 *XInt) *XInt {
 		x.minPoly = x1.minPoly
 		return x
 	}
-	coefs := make([]*big.Int, len(x1.coefs)*2)
+	coefs := make([]*big.Int, len(x1.coefs)*2-1)
 	var tmp big.Int
 	for i := range coefs {
 		coefs[i] = new(big.Int)
@@ -211,7 +211,13 @@ func (x *XInt) Mul(x1, x2 *XInt) *XInt {
 	for i := len(x1.coefs)*2 - 2; i >= len(x1.coefs); i-- {
 		cur := new(big.Int).Set(coefs[i])
 		for j := range x1.minPoly {
-			tmp.Mul(cur, x1.minPoly[j])
+			if x1.minPoly[j].Cmp(big.NewInt(-1)) == 0 {
+				tmp.Neg(cur)
+			} else if x1.minPoly[j].Cmp(big.NewInt(1)) == 0 {
+				tmp.Set(cur)
+			} else {
+				tmp.Mul(cur, x1.minPoly[j])
+			}
 			coefs[i-len(x1.coefs)+j].Add(coefs[i-len(x1.coefs)+j], &tmp)
 		}
 		coefs[i].SetInt64(0)
