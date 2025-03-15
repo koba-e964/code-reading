@@ -5,6 +5,82 @@ import (
 	"math/big"
 )
 
+const NAIVE_MUL_THRESHOLD = 10
+
+func naiveMul(a, b []*XInt, degree, prec int) []*XInt {
+	n := len(a)
+	m := len(b)
+	prec = min(prec, n+m-1)
+	z := make([]*XInt, prec)
+	for i := range z {
+		z[i] = new(XInt).SetInt(big.NewInt(0), degree)
+	}
+	for i := range a {
+		for j := range min(len(b), prec-i) {
+			z[i+j].Add(z[i+j], new(XInt).Mul(a[i], b[j]))
+		}
+	}
+	return z
+}
+
+func karatsuba(a, b []*XInt, degree, prec int) []*XInt {
+	if prec < 0 {
+		return []*XInt{}
+	}
+	if len(a) <= NAIVE_MUL_THRESHOLD || len(b) <= NAIVE_MUL_THRESHOLD {
+		return naiveMul(a, b, degree, prec)
+	}
+	n := max(len(a), len(b))
+	n = (n + 1) / 2 * 2
+	m := n / 2
+	prec = min(prec, 2*n-1)
+	aExtend := make([]*XInt, n)
+	bExtend := make([]*XInt, n)
+	copy(aExtend, a)
+	for i := len(a); i < n; i++ {
+		aExtend[i] = new(XInt).SetInt(big.NewInt(0), degree)
+	}
+	copy(bExtend, b)
+	for i := len(b); i < n; i++ {
+		bExtend[i] = new(XInt).SetInt(big.NewInt(0), degree)
+	}
+
+	a0, a1 := aExtend[:m], aExtend[m:]
+	b0, b1 := bExtend[:m], bExtend[m:]
+	z0 := karatsuba(a0, b0, degree, prec)
+	z2 := karatsuba(a1, b1, degree, prec-m)
+	t := make([]*XInt, m)
+	for i := range t {
+		t[i] = new(XInt).Add(a0[i], a1[i])
+	}
+	u := make([]*XInt, m)
+	for i := range u {
+		u[i] = new(XInt).Add(b0[i], b1[i])
+	}
+	z1 := karatsuba(t, u, degree, prec-m)
+	for i := range min(prec-m, len(z1)) {
+		z1[i].Sub(z1[i], z0[i])
+		z1[i].Sub(z1[i], z2[i])
+	}
+	z := make([]*XInt, 2*n-1)
+	for i := range z {
+		z[i] = new(XInt).SetInt(big.NewInt(0), degree)
+	}
+	for i := range z0 {
+		z[i].Add(z[i], z0[i])
+	}
+	for i := range z1 {
+		z[i+m].Add(z[i+m], z1[i])
+	}
+	for i := range z2 {
+		if i+2*m >= len(z) {
+			break
+		}
+		z[i+2*m].Add(z[i+2*m], z2[i])
+	}
+	return z[:prec]
+}
+
 type Laurent struct {
 	val    int
 	prec   int
@@ -122,22 +198,15 @@ func (l *Laurent) Shl(x *Laurent, n int) *Laurent {
 
 func (l *Laurent) Mul(x, y *Laurent) *Laurent {
 	prec := min(x.prec, y.prec)
-	coef := make([]*XInt, prec)
 	if x.degree != y.degree {
 		panic(fmt.Sprint("Laurent.Mul: different degrees: ", x.degree, y.degree))
 	}
 	degree := x.degree
-	for i := range prec {
-		coef[i] = new(XInt).SetInt(big.NewInt(0), degree)
-		for j := max(0, i-y.prec+1); j <= min(i, x.prec-1); j++ {
-			var tmp XInt
-			tmp.Mul(x.coef[j], y.coef[i-j])
-			coef[i].Add(coef[i], &tmp)
-		}
-	}
+	coefs := karatsuba(x.coef[:prec], y.coef[:prec], degree, prec)
+	coefs = coefs[:prec]
 	l.val = x.val + y.val
 	l.prec = prec
-	l.coef = coef
+	l.coef = coefs
 	l.degree = degree
 	l.assertValid()
 	return l
