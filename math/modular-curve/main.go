@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"slices"
+	"time"
 )
 
 func main() {
@@ -16,11 +17,17 @@ func main() {
 	}
 	degrees := []int{2, 3, 5, 7, 11, 13}
 	for _, degree := range degrees {
+		start := time.Now()
 		coefs := ModularBrute(degree)
+		elapsed := time.Since(start)
 		type Entry struct {
 			XDeg int    `json:"x_deg"`
 			YDeg int    `json:"y_deg"`
 			Coef string `json:"coef"`
+		}
+		type Output struct {
+			Entries []Entry `json:"entries"`
+			TimeMs  int64   `json:"time_ms"`
 		}
 		entries := make([]Entry, len(coefs))
 		for i, coef := range coefs {
@@ -31,7 +38,11 @@ func main() {
 			}
 		}
 		slices.Reverse(entries)
-		jsonString, err := json.MarshalIndent(entries, "", "  ")
+		output := Output{
+			Entries: entries,
+			TimeMs:  elapsed.Milliseconds(),
+		}
+		jsonString, err := json.MarshalIndent(output, "", "  ")
 		if err != nil {
 			panic(err)
 		}

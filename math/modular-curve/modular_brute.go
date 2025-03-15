@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/big"
 )
 
@@ -33,7 +34,7 @@ func Psi(n int) int {
 func divide(deg, n int) (int, int) {
 	x, y := deg/n, deg%n
 	if x < y {
-		panic("x >= y should hold")
+		panic(fmt.Sprintf("x >= y should hold:  %d/%d", deg, n))
 	}
 	return x, y
 }
