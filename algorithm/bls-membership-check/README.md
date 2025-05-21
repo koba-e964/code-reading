@@ -14,14 +14,13 @@ BLS12-381 などの BLS 曲線は以下のように定義されている。[[Edg
 - $\mathbb{G} _ 1 := E(\mathbb{F} _ p)[r]$ は位数 $r$ の巡回群。
 - $\mathbb{G} _ 2 := E'(\mathbb{F} _ {p^2})[r]$ は位数 $r$ の巡回群。
 - $\mathbb{G} _ T := (\mathbb{F} _ {p^{12}})^{\times}[r]$ は位数 $r$ の巡回群。
+- $\mathbb{F} _ {p^{6}} := \mathbb{F} _ {p^{2}}(v)$ ($v^3 = -1-i$) [[Bow2019]]
+- $\mathbb{F} _ {p^{12}} := \mathbb{F} _ {p^{6}}(w)$ ($w^2 = -v$) [[Bow2019]]
 
 $E(\mathbb{F} _ p)$ や $E'(\mathbb{F} _ {p^2})$ の点が与えられたとき、それが $\mathbb{G}_1$ や $\mathbb{G}_2$ に属するとは限らないため、所属判定が必要である。そのような判定は $rP = O$ かどうかの判定で簡単にできるが、ここではそれよりも高速な手法を扱う。
 
-## $\psi$ の定義
-TODO
-
 ## $\mathbb{G}_1$
-$E(\mathbb{F} _ p)$ において $\psi(x, y) = (\beta x, y)$ が成立する。ただし $\beta$ は曲線ごとに定まる 1 の原始 3 乗根である。
+$E(\mathbb{F} _ p)$ において $\psi_1(x, y) := (\beta x, y)$ とする。ただし $\beta$ は曲線ごとに定まる 1 の原始 3 乗根である。
 
 $P \in E(\mathbb{F} _ p)$ に対して
 $\psi(P) = -u^2P$ か判定する。
@@ -51,23 +50,71 @@ sage: cubes
 ```
 
 証明:
-- ($\Rightarrow$ (BLS12-381 のみ)): $rP = O$ を仮定する。上の例の点を $P_0$ とすると、 $P_0$ は位数が $r$ であり $\psi(P _ 0) = -u^2P _ 0$ を満たす。 $P = kP _ 0$ なる $k$ をとると、 $\psi(P) = \psi(kP _ 0) = k\psi(P _ 0) = k(-u^2P _ 0) = -u^2 P$ が成立する。
-- ($\Leftarrow$): $\psi(P) = -u^2P$ を仮定する。 $\psi^2(P) + \psi(P) + P = u^4P - u^2P + P = rP$ より、 $\psi^2(P) + \psi(P) + P = O$ を示せば良い。 $\psi^2(P), \psi(P), P$ は同一直線上にある異なる 3 点であるので合計は $O$ である。
-  - $P = (a,b)$ とおくと $\psi(P) = (\beta a, b), \psi^2(P) = (\beta^2 a, b)$ である。これらは直線 $y = b$ の上にある。
+- ($\Rightarrow$ (BLS12-381 のみ)): $rP = O$ を仮定する。上の例の点を $P_0$ とすると、 $P_0$ は位数が $r$ であり $\psi _ 1(P _ 0) = -u^2P _ 0$ を満たす。 $P = kP _ 0$ なる $k$ をとると、 $\psi _ 1(P) = \psi _ 1(kP _ 0) = k\psi _ 1(P _ 0) = k(-u^2P _ 0) = -u^2 P$ が成立する。
+- ($\Leftarrow$): $\psi _ 1(P) = -u^2P$ を仮定する。 $\psi _ 1^2(P) + \psi _ 1(P) + P = u^4P - u^2P + P = rP$ より、 $\psi _ 1^2(P) + \psi _ 1(P) + P = O$ を示せば良い。 $\psi _ 1^2(P), \psi _ 1(P), P$ は同一直線上にある異なる 3 点であるので合計は $O$ である。
+  - $P = (a,b)$ とおくと $\psi _ 1(P) = (\beta a, b), \psi _ 1^2(P) = (\beta^2 a, b)$ である。これらは直線 $y = b$ の上にある。
 
 ## $\mathbb{G}_2$
+$E'(\mathbb{F} _ {p^2})$ において $\psi _ 2$ を untwist-Frobenius-twist で定義する。
+より正確には、 $E': y^2 = x^3 + 4(1+i)$ から $E: y^2 = x^3 + 4$ への準同型 $\phi$ を以下で定める:
+
+$$\phi(a, b) := (a/w^2, b/w^3)$$
+
+$\psi_2 := \phi^{-1} \pi_p \phi$ と定義すると、 $\psi_2: E' \to E'$ は準同型である。具体的には
+
+$$\psi _ 2(a, b) := \left(\frac{a^p}{w^{2p-2}}, \frac{b^p}{w^{3p-3}}\right)$$
+
+である。
+
 $Q \in E'(\mathbb{F} _ {p^2})$ に対して
-$\psi(Q) = uP$ か判定する。
+$\psi _ 2(Q) = uP$ か判定する。
+
+証明:
+
+Frobenius 写像 $\pi_p$ が $\pi _ p^2 - t\pi _ p + p = 0$ を満たすのだから、 $\psi_2$ も同様の式 $\psi _ 2^2 - t\psi _ 2 + p = 0$ を満たす。
+
+- ($\Rightarrow$): $rQ = O$ を仮定する。 $p = h _ 1r + u$ であるため、 $pQ = uQ$ であり、 $\psi _ 2^2(Q) - (u+1) \psi _ 2(Q) + uQ = O$ が成立する。 これを解くと $\psi _ 2(Q) = uQ$ である。
+- ($\Leftarrow$): $\psi _ 2(Q) = uQ$ を仮定する。
+  - $\psi _ 2^2(Q) - (u+1) \psi _ 2(Q) + uQ = O$ が成立する。これは $\psi _ 2(Q) = uQ$ から。
+  - $\psi _ 2^2(Q) - (u+1) \psi _ 2(Q) + pQ = O$ が成立する。
+  
+  両辺の差分をとると $h _ 1rQ = O$ である。一方で $E'(\mathbb{F} _ {p^2})$ の位数は $h _ 2r$ であるから $h _ 2rQ = O$ も成立する。 $\mathrm{gcd}(h _ 1, h _ 2) = 1$ であるためこれから $rQ = O$ が結論できる。
+
 
 ## $\mathbb{G}_T$
 $w \in (\mathbb{F} _ {p^{12}})^{\times}$ に対して
 $w^p = w^u$ か判定する。
 
+# 疑問点
+## 1
+$\psi_1$ は $\psi_2$ と同じように untwist-Frobenius-twist で表現できるのか?
+
+できる。 以下の条件を満たす $c$ を選べば良い。
+- $4c^6 \in \mathbb{F} _ p$
+- $c^{2p-2} = \beta$
+- $c^{3p-3} = 1$
+
+これに対して、 $E$ から $E'': y^2 = x^3 + 4c^6$ への準同型が以下で定義できる:
+- $\phi(a, b) := (ac^2, bc^3)$
+
+$c$ としては、 $3^e \mathrel{\|} p-1$ となるような $e$ をとったとき、1 の原始 $3^{e+1}$ 乗根を取れば良い。
+- そのような選び方は $2 \cdot 3^e$ 通りあるが、半数は $2p-2$ 乗すると $\beta$ になる。
+- そのような $c$ は $\mathbb{F} _ {p^3}$ に存在する。 $(\mathbb{F} _ {p^3})^{\times} / (\mathbb{F} _ {p})^{\times}$ は位数が $p^2+p+1$ であるが、これは 3 の倍数であるため。
+
+## 2
+「$\psi _ 2^2(Q) - (u+1) \psi _ 2(Q) + uQ = O$ を解くと $\psi _ 2(Q) = uQ$ 」というのはどういう意味なのか?
+
+TODO
+
 # 参考文献
+
+[[Bow2019]] Bowe, Sean. "Faster subgroup checks for BLS12-381." Cryptology ePrint Archive (2019).
 
 [[Edg2023]] Edgington, Ben. "BLS12-381 for the Rest of Us." HackMD, <https://hackmd.io/@benjaminion/bls12-381>. Accessed 18 May 2025.
 
 [[Sco2011]] Scott, Michael. "A note on group membership tests for $\mathbb{G} _ 1$, $\mathbb{G} _ 2$ and $\mathbb{G} _ T$ on BLS pairing-friendly curves." Cryptology ePrint Archive (2021).
+
+[Bow2019]: https://eprint.iacr.org/2019/814
 
 [Sco2011]: https://eprint.iacr.org/2021/1130
 
