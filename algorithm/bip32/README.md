@@ -28,7 +28,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
 
 ## 既存の実装
 ### Go
-https://github.com/tyler-smith/go-bip32
+https://github.com/FactomProject/go-bip32
 - 秘密鍵と公開鍵が同じ型
   - Go の標準ライブラリーでは PrivateKey, PublicKey というように分けている
   - [https://soatok.blog/2021/01/20/please-stop-encrypting-with-rsa-directly/](https://soatok.blog/2021/01/20/please-stop-encrypting-with-rsa-directly/)

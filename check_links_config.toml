@@ -51,3 +51,43 @@ This page sometimes returns 403.
 considered_alternatives = [
     "",
 ]
+
+[[ignores]]
+url = "https://mathoverflow.net/questions/71704/computing-the-q-series-of-the-j-invariant"
+codes = [403]
+reason = """
+This page sometimes returns 403.
+"""
+considered_alternatives = [
+    "",
+]
+
+[[ignores]]
+url = "https://math.stackexchange.com/questions/3951434/generators-of-level-2-modular-forms"
+codes = [403]
+reason = """
+This page sometimes returns 403.
+"""
+considered_alternatives = [
+    "",
+]
+
+[[ignores]]
+url = "https://mathoverflow.net/questions/71704/computing-the-q-series-of-the-j-invariant"
+codes = [403]
+reason = """
+This page sometimes returns 403.
+"""
+considered_alternatives = [
+    "",
+]
+
+[[ignores]]
+url = "https://math.stackexchange.com/questions/2000978/proof-of-the-disjunction-property"
+codes = [403]
+reason = """
+This page sometimes returns 403.
+"""
+considered_alternatives = [
+    "",
+]
